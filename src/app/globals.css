@@ -2,7 +2,17 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111111;
+  --border-color: #f0f0f0;
+  --primary-color: #2563eb;
+  --secondary-color: #64748b;
+  --accent-color: #3b82f6;
+  --hover-color: #f8fafc;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --transition-base: all 0.2s ease-in-out;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @theme inline {
@@ -14,13 +24,199 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #111111;
+    --border-color: #f0f0f0;
+    --hover-color: #f8fafc;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Open Sauce One", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Modern UI Components */
+.modern-border {
+  border: 1px solid var(--border-color);
+  border-radius: 1.25rem;
+  background: var(--background);
+  transition: var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.modern-border:hover {
+  border-color: var(--secondary-color);
+  box-shadow: var(--shadow-md);
+}
+
+.card-hover {
+  transition: var(--transition-smooth);
+  background: var(--background);
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Modern Button Styles */
+.btn {
+  padding: 0.875rem 1.75rem;
+  border-radius: 1rem;
+  font-weight: 500;
+  transition: var(--transition-base);
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.btn-outline:hover {
+  background: var(--hover-color);
+}
+
+/* Modern Input Styles */
+.input {
+  padding: 0.875rem 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+  background: var(--background);
+  transition: var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
+}
+
+/* Modern Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* Modern Container */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Modern Grid Layout */
+.grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Modern Image Styles */
+.img-hover {
+  transition: var(--transition-smooth);
+}
+
+.img-hover:hover {
+  transform: scale(1.05);
+}
+
+/* Modern Navigation */
+.nav-link {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  transition: var(--transition-base);
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: var(--transition-base);
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Modern Section Styles */
+.section {
+  padding: 5rem 0;
+  background: var(--background);
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  color: var(--foreground);
+  letter-spacing: -0.025em;
+}
+
+/* Modern Card Styles */
+.card {
+  background: var(--background);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Modern Footer Styles */
+.footer {
+  border-top: 1px solid var(--border-color);
+  padding: 5rem 0;
+  background: var(--background);
+}
+
+/* Modern Social Icons */
+.social-icon {
+  width: 2rem;
+  height: 2rem;
+  transition: var(--transition-base);
+}
+
+.social-icon:hover {
+  transform: translateY(-2px);
+  opacity: 0.8;
+}
+
+/* Modern Truncate Styles */
+.truncate-2-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
