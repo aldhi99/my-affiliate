@@ -3,8 +3,8 @@ import { products } from '@/data/products';
 import ProductClient from './ProductClient';
 
 interface PageProps {
-  params: Promise<{ id: string }>; // Update to Promise
-  searchParams?: { [key: string]: string | string[] | undefined };
+  params: Promise<{ id: string }>; // Already updated for params
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>; // Update for searchParams
 }
 
 type Props = PageProps;
@@ -12,7 +12,7 @@ type Props = PageProps;
 export async function generateMetadata(
   { params }: Props
 ): Promise<Metadata> {
-  const resolvedParams = await params; // Await the params Promise
+  const resolvedParams = await params; // Await params
   const product = products.find((p) => p.id === parseInt(resolvedParams.id));
 
   if (!product) {
@@ -61,6 +61,6 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: Props) {
-  const resolvedParams = await params; // Await the params Promise
+  const resolvedParams = await params; // Await params
   return <ProductClient params={resolvedParams} />;
 }
