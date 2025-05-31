@@ -32,7 +32,7 @@ export default function Home() {
         {/* Features Section */}
         <section className="section bg-hover-color">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div className="text-center p-6">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-background flex items-center justify-center">
                   <svg className="w-8 h-8 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">

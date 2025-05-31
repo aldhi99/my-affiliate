@@ -205,7 +205,7 @@ export default function ProductsPage() {
                     <div className="p-4 pt-2">
                       <div className="flex flex-col gap-1">
                         <h2 className="text-lg font-semibold line-clamp-2 h-[60px]">{product.name}</h2>
-                        <p className="text-gray-600 text-sm underline">{product.price}</p>
+                        <p className="text-gray-600 text-sm underline truncate-1-lines">{product.price}</p>
                         <p className="text-sm text-gray-500 line-clamp-2 mt-2">
                           {product.description
                             .replace(/<[^>]*>/g, '')

@@ -10,497 +10,489 @@ export interface Product {
 
 export const categories = [
   'Elektronik',
-  'Perlengkapan Rumah',
-  'Olahraga & Outdoor',
+  'Fashion',
   'Kesehatan & Kecantikan',
-  'Aksesoris',
-  'Peralatan Dapur',
-  'Gaming & Hiburan'
+  'Rumah Tangga',
+  'Olahraga & Outdoor',
+  'Makanan & Minuman',
+  'Gaming & Hiburan',
+  'Ibu & Anak',
+  'Otomotif'
 ] as const;
 
 export const products: Product[] = [
   {
     id: 1,
-    name: 'Wireless Earbuds Pro',
-    price: 'Rp250.000 - Rp600.000',
+    name: 'Samsung Galaxy A54 5G 8/256GB - Awesome Black',
+    price: 'Rp5.999.000 - Rp6.499.000',
     category: 'Elektronik',
-    subcategory: 'Audio',
+    subcategory: 'Smartphone',
     images: [
-      'https://images.unsplash.com/photo-1590658268034-2383e8a4f9df',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/16/1045828/1045828_1c1c1c1c-1c1c-1c1c-1c1c-1c1c1c1c1c1c_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/16/1045828/1045828_2c2c2c2c-2c2c-2c2c-2c2c-2c2c2c2c2c2c_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/16/1045828/1045828_3c3c3c3c-3c3c-3c3c-3c3c-3c3c3c3c3c3c_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/16/1045828/1045828_4c4c4c4c-4c4c-4c4c-4c4c-4c4c4c4c4c4c_700_700',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Earbuds nirkabel dengan suara premium dan teknologi <strong>active noise cancellation</strong>.</p><br>
-      <h4>Fitur Unggulan:</h4>
+      <p>Galaxy A54 5G - Smartphone Android Terbaik di Kelasnya</p><br>
+      <h4>Spesifikasi:</h4>
       <ul>
-        <li>Bluetooth 5.2 untuk koneksi stabil</li>
-        <li>Baterai hingga 24 jam dengan casing</li>
-        <li>Water-resistant IPX4</li>
+        <li>Layar: 6.4" FHD+ Super AMOLED 120Hz</li>
+        <li>Prosesor: Exynos 1380 Octa-core</li>
+        <li>RAM: 8GB</li>
+        <li>Penyimpanan: 256GB (Expandable)</li>
+        <li>Kamera: 50MP + 12MP + 5MP (Main + Ultra Wide + Macro)</li>
+        <li>Selfie: 32MP</li>
+        <li>Baterai: 5000mAh, Fast Charging 25W</li>
+        <li>OS: Android 13, One UI 5.1</li>
       </ul><br>
-      <p>Cocok untuk olahraga, perjalanan, dan penggunaan sehari-hari.</p>
+      <h4>Garansi:</h4>
+      <ul>
+        <li>Garansi Resmi Samsung Indonesia</li>
+        <li>Garansi Unit 12 Bulan</li>
+        <li>Garansi Sparepart 12 Bulan</li>
+      </ul><br>
+      <p>Bonus: Casing Silicone, Screen Protector, Charger 25W</p>
     `,
   },
   {
     id: 2,
-    name: 'Premium Dog Food 1kg',
-    price: 'Rp50.000 - Rp100.000',
-    category: 'Perlengkapan Rumah',
-    subcategory: 'Pet Supplies',
+    name: 'Emina Bright Stuff Face Serum 30ml',
+    price: 'Rp89.000 - Rp99.000',
+    category: 'Kesehatan & Kecantikan',
+    subcategory: 'Skincare',
     images: [
-      'https://images.unsplash.com/photo-1601758260955-2e5a9a4d4a3b',
-      'https://images.unsplash.com/photo-1589924741906-8a8f7f2a8e8f',
-      'https://images.unsplash.com/photo-1597843786411-8b5f0b7b8b0c',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/2/15/1045828/1045828_1d1d1d1d-1d1d-1d1d-1d1d-1d1d1d1d1d1d_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/2/15/1045828/1045828_2d2d2d2d-2d2d-2d2d-2d2d-2d2d2d2d2d2d_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/2/15/1045828/1045828_3d3d3d3d-3d3d-3d3d-3d3d-3d3d3d3d3d3d_700_700',
     ],
     description: `
-      <h3>Keterangan Produk</h3>
-      <p>Makanan anjing berkualitas tinggi dengan nutrisi seimbang untuk semua ras.</p><br>
-      <h4>Varian Rasa:</h4>
+      <h3>Deskripsi Produk</h3>
+      <p>Emina Bright Stuff Face Serum - Serum Pencerah Wajah</p><br>
+      <h4>Manfaat:</h4>
       <ul>
-        <li>Daging Sapi</li>
-        <li>Ayam</li>
+        <li>Mencerahkan kulit wajah</li>
+        <li>Mengurangi noda hitam</li>
+        <li>Melembabkan kulit</li>
+        <li>Membuat kulit lebih glowing</li>
       </ul><br>
-      <h4>Kandungan Nutrisi:</h4>
-      <table>
-        <tr><td>Protein</td><td>25%</td></tr>
-        <tr><td>Lemak</td><td>12%</td></tr>
-        <tr><td>Serat</td><td>4%</td></tr>
-      </table><br>
-      <p>Mendukung kesehatan tulang dan bulu anjing Anda.</p>
+      <h4>Kandungan Utama:</h4>
+      <ul>
+        <li>Niacinamide 3%</li>
+        <li>Vitamin C</li>
+        <li>Alpha Arbutin</li>
+        <li>Hyaluronic Acid</li>
+      </ul><br>
+      <p>Cara Pakai: Oleskan 2-3 tetes serum pada wajah yang sudah dibersihkan, pagi dan malam hari.</p>
     `,
   },
   {
     id: 3,
-    name: 'Ergonomic Office Chair',
-    price: 'Rp1.200.000 - Rp2.000.000',
-    category: 'Perlengkapan Rumah',
-    subcategory: 'Furniture',
+    name: 'Cosmos CB-282 Rice Cooker 1.8L',
+    price: 'Rp299.000 - Rp349.000',
+    category: 'Rumah Tangga',
+    subcategory: 'Peralatan Dapur',
     images: [
-      'https://images.unsplash.com/photo-1582719183515-64b7b0a50a0d',
-      'https://images.unsplash.com/photo-1590587899744-5c7e8c0a8b0c',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/1/20/1045828/1045828_1e1e1e1e-1e1e-1e1e-1e1e-1e1e1e1e1e1e_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/1/20/1045828/1045828_2e2e2e2e-2e2e-2e2e-2e2e-2e2e2e2e2e2e_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/1/20/1045828/1045828_3e3e3e3e-3e3e-3e3e-3e3e-3e3e3e3e3e3e_700_700',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Kursi kantor ergonomis dengan penyangga punggung untuk kenyamanan maksimal.</p><br>
-      <h4>Fitur:</h4>
+      <p>Cosmos Rice Cooker CB-282 - Penanak Nasi Praktis</p><br>
+      <h4>Spesifikasi:</h4>
       <ul>
-        <li>Adjustable height dan tilt</li>
-        <li>Bahan mesh breathable</li>
-        <li>Roda anti-slip</li>
+        <li>Kapasitas: 1.8L (6-8 porsi)</li>
+        <li>Daya: 400 Watt</li>
+        <li>Material Pan: Non-stick coating</li>
+        <li>Fitur: Keep Warm, Steam Tray</li>
       </ul><br>
-      <p>Ideal untuk kerja dari rumah atau kantor.</p>
+      <h4>Keunggulan:</h4>
+      <ul>
+        <li>Anti lengket</li>
+        <li>Mudah dibersihkan</li>
+        <li>Hemat listrik</li>
+        <li>Garansi 1 tahun</li>
+      </ul><br>
+      <p>Bonus: Sendok nasi dan centong nasi</p>
     `,
   },
   {
     id: 4,
-    name: 'Smart Watch Fitness',
-    price: 'Rp500.000 - Rp900.000',
-    category: 'Elektronik',
-    subcategory: 'Wearables',
+    name: 'Nike Air Force 1 Low White',
+    price: 'Rp1.999.000 - Rp2.299.000',
+    category: 'Fashion',
+    subcategory: 'Sepatu',
     images: [
-      'https://images.unsplash.com/photo-1546868871-7041f2a55e12',
-      'https://images.unsplash.com/photo-1559056199-641a63781cce',
-      'https://images.unsplash.com/photo-1607936854278-5e66e63d02d7',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/10/1045828/1045828_1f1f1f1f-1f1f-1f1f-1f1f-1f1f1f1f1f1f_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/10/1045828/1045828_2f2f2f2f-2f2f-2f2f-2f2f-2f2f2f2f2f2f_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/10/1045828/1045828_3f3f3f3f-3f3f-3f3f-3f3f-3f3f3f3f3f3f_700_700',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Jam tangan pintar dengan fitur pelacakan kesehatan dan notifikasi smartphone.</p><br>
-      <h4>Spesifikasi:</h4>
+      <p>Nike Air Force 1 Low - Sepatu Sneakers Iconic</p><br>
+      <h4>Detail Produk:</h4>
       <ul>
-        <li>Layar AMOLED 1.4 inci</li>
-        <li>Monitor detak jantung dan SpO2</li>
-        <li>Tahan air hingga 50 meter</li>
+        <li>Warna: White/White</li>
+        <li>Material: Leather</li>
+        <li>Sol: Rubber</li>
+        <li>Style: Casual</li>
       </ul><br>
-      <p>Cocok untuk gaya hidup aktif dan olahraga.</p>
+      <h4>Ukuran Tersedia:</h4>
+      <p>36 | 37 | 38 | 39 | 40 | 41 | 42 | 43 | 44</p><br>
+      <h4>Fitur:</h4>
+      <ul>
+        <li>Air-Sole unit</li>
+        <li>Perforated toe box</li>
+        <li>Padded ankle collar</li>
+        <li>Nike branding</li>
+      </ul><br>
+      <p>Original Nike Indonesia - Garansi 100% Authentic</p>
     `,
   },
   {
     id: 5,
-    name: 'Running Shoes Men',
-    price: 'Rp400.000 - Rp700.000',
-    category: 'Olahraga & Outdoor',
-    subcategory: 'Sepatu',
+    name: 'Mamypoko Pants L 44s',
+    price: 'Rp189.000 - Rp199.000',
+    category: 'Ibu & Anak',
+    subcategory: 'Popok',
     images: [
-      'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa',
-      'https://images.unsplash.com/photo-1600185365483-26d7a3b86a04',
-      'https://images.unsplash.com/photo-1595950653106-6c9ebd18f8f8',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/2/25/1045828/1045828_1g1g1g1g-1g1g-1g1g-1g1g-1g1g1g1g1g1g_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/2/25/1045828/1045828_2g2g2g2g-2g2g-2g2g-2g2g-2g2g2g2g2g2g_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/2/25/1045828/1045828_3g3g3g3g-3g3g-3g3g-3g3g-3g3g3g3g3g3g_700_700',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Sepatu lari pria dengan desain ringan dan sol bantalan maksimal.</p><br>
-      <h4>Material:</h4>
+      <p>Mamypoko Pants L - Popok Celana Premium</p><br>
+      <h4>Spesifikasi:</h4>
       <ul>
-        <li>Upper: Mesh breathable</li>
-        <li>Sole: EVA foam</li>
+        <li>Ukuran: L (9-14 kg)</li>
+        <li>Isi: 44 pcs</li>
+        <li>Gender: Unisex</li>
       </ul><br>
-      <h4>Ukuran:</h4>
-      <p>40 | 41 | 42 | 43 | 44</p><br>
-      <p>Memberikan kenyamanan saat lari jarak jauh.</p>
+      <h4>Keunggulan:</h4>
+      <ul>
+        <li>3D Fit System</li>
+        <li>Anti bocor 12 jam</li>
+        <li>Ekstra lembut</li>
+        <li>Indikator pipis</li>
+      </ul><br>
+      <p>BPOM: NA18150102563</p>
     `,
   },
   {
     id: 6,
-    name: 'Portable Bluetooth Speaker',
-    price: 'Rp300.000 - Rp800.000',
-    category: 'Elektronik',
-    subcategory: 'Audio',
+    name: 'Indomie Goreng Special 1 Dus (40 pcs)',
+    price: 'Rp89.000 - Rp99.000',
+    category: 'Makanan & Minuman',
+    subcategory: 'Mie Instan',
     images: [
-      'https://images.unsplash.com/photo-1542182069-81f3c5a4f9f5',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/5/1045828/1045828_1h1h1h1h-1h1h-1h1h-1h1h-1h1h1h1h1h1h_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/5/1045828/1045828_2h2h2h2h-2h2h-2h2h-2h2h-2h2h2h2h2h2h_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/5/1045828/1045828_3h3h3h3h-3h3h-3h3h-3h3h-3h3h3h3h3h3h_700_700',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Speaker Bluetooth portabel dengan suara bass mendalam.</p><br>
-      <h4>Fitur:</h4>
+      <p>Indomie Goreng Special - Mie Goreng Instan Terlaris</p><br>
+      <h4>Detail Produk:</h4>
       <ul>
-        <li>Tahan air IPX7</li>
-        <li>Baterai hingga 15 jam</li>
-        <li>Koneksi multi-device</li>
+        <li>Isi: 40 pcs per dus</li>
+        <li>Berat: 85g per pcs</li>
+        <li>Expired: 6 bulan</li>
       </ul><br>
-      <p>Sempurna untuk piknik atau pesta outdoor.</p>
+      <h4>Kandungan:</h4>
+      <ul>
+        <li>Mie</li>
+        <li>Bumbu</li>
+        <li>Minyak</li>
+        <li>Sambal</li>
+      </ul><br>
+      <p>BPOM: NA18150102563</p>
     `,
   },
   {
     id: 7,
-    name: 'Gaming Keyboard RGB',
-    price: 'Rp350.000 - Rp600.000',
+    name: 'Logitech G Pro X Superlight Wireless Mouse',
+    price: 'Rp1.999.000 - Rp2.299.000',
     category: 'Gaming & Hiburan',
-    subcategory: 'Peripheral',
+    subcategory: 'Gaming Gear',
     images: [
-      'https://images.unsplash.com/photo-1587829748823-f550f3122b0e',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/12/1045828/1045828_1i1i1i1i-1i1i-1i1i-1i1i-1i1i1i1i1i1i_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/12/1045828/1045828_2i2i2i2i-2i2i-2i2i-2i2i-2i2i2i2i2i2i_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/12/1045828/1045828_3i3i3i3i-3i3i-3i3i-3i3i-3i3i3i3i3i3i_700_700',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Keyboard mekanik dengan lampu RGB dan tombol responsif.</p><br>
+      <p>Logitech G Pro X Superlight - Mouse Gaming Wireless Terbaik</p><br>
+      <h4>Spesifikasi:</h4>
+      <ul>
+        <li>Sensor: HERO 25K</li>
+        <li>DPI: 25,600</li>
+        <li>Berat: 63g</li>
+        <li>Baterai: 70 jam</li>
+        <li>Koneksi: Wireless 2.4GHz</li>
+      </ul><br>
       <h4>Fitur:</h4>
       <ul>
-        <li>Switch mekanik blue/red</li>
-        <li>Anti-ghosting keys</li>
-        <li>Kustomisasi lampu RGB</li>
+        <li>Ultra-lightweight</li>
+        <li>Zero-additive PTFE feet</li>
+        <li>5 programmable buttons</li>
+        <li>LIGHTSYNC RGB</li>
       </ul><br>
-      <p>Cocok untuk gamer profesional dan kasual.</p>
+      <p>Garansi Resmi Logitech 2 Tahun</p>
     `,
   },
   {
     id: 8,
-    name: 'Electric Kettle 1.7L',
-    price: 'Rp200.000 - Rp400.000',
-    category: 'Peralatan Dapur',
-    subcategory: 'Elektronik',
+    name: 'Shell Helix HX7 5W-40 4L',
+    price: 'Rp399.000 - Rp449.000',
+    category: 'Otomotif',
+    subcategory: 'Oli & Pelumas',
     images: [
-      'https://images.unsplash.com/photo-1602143407151-3b6f7a4f8b5f',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/8/1045828/1045828_1j1j1j1j-1j1j-1j1j-1j1j-1j1j1j1j1j1j_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/8/1045828/1045828_2j2j2j2j-2j2j-2j2j-2j2j-2j2j2j2j2j2j_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/8/1045828/1045828_3j3j3j3j-3j3j-3j3j-3j3j-3j3j3j3j3j3j_700_700',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Ketel listrik dengan kapasitas besar dan desain modern.</p><br>
+      <p>Shell Helix HX7 - Oli Mesin Semi Synthetic</p><br>
       <h4>Spesifikasi:</h4>
       <ul>
-        <li>Daya: 1500W</li>
-        <li>Material: Stainless steel</li>
-        <li>Auto shut-off</li>
+        <li>Volume: 4 Liter</li>
+        <li>Viskositas: 5W-40</li>
+        <li>API: SN</li>
+        <li>ACEA: A3/B3, A3/B4</li>
       </ul><br>
-      <p>Mudah digunakan untuk kebutuhan dapur sehari-hari.</p>
+      <h4>Keunggulan:</h4>
+      <ul>
+        <li>Active Cleansing Technology</li>
+        <li>Performa mesin optimal</li>
+        <li>Hemat bahan bakar</li>
+        <li>Perlindungan mesin maksimal</li>
+      </ul><br>
+      <p>Original Shell Indonesia - Garansi 100% Authentic</p>
     `,
   },
   {
     id: 9,
-    name: 'Yoga Mat Premium',
-    price: 'Rp150.000 - Rp300.000',
+    name: 'Decathlon Forclaz Trek 100 50L',
+    price: 'Rp799.000 - Rp899.000',
     category: 'Olahraga & Outdoor',
-    subcategory: 'Fitness',
+    subcategory: 'Tas Ransel',
     images: [
-      'https://images.unsplash.com/photo-1601925266748-373a9f61b7c3',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/15/1045828/1045828_1k1k1k1k-1k1k-1k1k-1k1k-1k1k1k1k1k1k_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/15/1045828/1045828_2k2k2k2k-2k2k-2k2k-2k2k-2k2k2k2k2k2k_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/15/1045828/1045828_3k3k3k3k-3k3k-3k3k-3k3k-3k3k3k3k3k3k_700_700',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Matras yoga dengan ketebalan ideal untuk kenyamanan saat berlatih.</p><br>
+      <p>Decathlon Forclaz Trek 100 - Tas Ransel Hiking</p><br>
+      <h4>Spesifikasi:</h4>
+      <ul>
+        <li>Kapasitas: 50L</li>
+        <li>Material: Polyester</li>
+        <li>Berat: 1.5kg</li>
+        <li>Dimensi: 70x35x30 cm</li>
+      </ul><br>
       <h4>Fitur:</h4>
       <ul>
-        <li>Ketebalan: 6mm</li>
-        <li>Anti-slip surface</li>
-        <li>Mudah dibersihkan</li>
+        <li>Adjustable shoulder straps</li>
+        <li>Hip belt</li>
+        <li>Rain cover</li>
+        <li>Multiple compartments</li>
+        <li>Hydration compatible</li>
       </ul><br>
-      <p>Cocok untuk yoga, pilates, dan latihan lainnya.</p>
+      <p>Garansi 2 Tahun Decathlon Indonesia</p>
     `,
   },
   {
     id: 10,
-    name: 'Smart Home Security Camera',
-    price: 'Rp500.000 - Rp1.000.000',
-    category: 'Elektronik',
-    subcategory: 'Smart Home',
+    name: 'Philips Airfryer HD9200/91',
+    price: 'Rp1.999.000 - Rp2.299.000',
+    category: 'Rumah Tangga',
+    subcategory: 'Peralatan Dapur',
     images: [
-      'https://images.unsplash.com/photo-1516321318423-4b6a0d3f0e6f',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/18/1045828/1045828_1l1l1l1l-1l1l-1l1l-1l1l-1l1l1l1l1l1l_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/18/1045828/1045828_2l2l2l2l-2l2l-2l2l-2l2l-2l2l2l2l2l2l_700_700',
+      'https://images.tokopedia.net/img/cache/700/product-1/2023/3/18/1045828/1045828_3l3l3l3l-3l3l-3l3l-3l3l-3l3l3l3l3l3l_700_700',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Kamera keamanan pintar dengan resolusi tinggi dan koneksi Wi-Fi.</p><br>
-      <h4>Fitur:</h4>
+      <p>Philips Airfryer HD9200/91 - Penggorengan Tanpa Minyak</p><br>
+      <h4>Spesifikasi:</h4>
       <ul>
-        <li>Resolusi 1080p</li>
-        <li>Night vision</li>
-        <li>Motion detection</li>
+        <li>Kapasitas: 4.1L</li>
+        <li>Daya: 1500W</li>
+        <li>Temperature: 60-200°C</li>
+        <li>Timer: 60 menit</li>
       </ul><br>
-      <p>Kontrol melalui aplikasi smartphone.</p>
+      <h4>Keunggulan:</h4>
+      <ul>
+        <li>Rapid Air Technology</li>
+        <li>Hemat minyak hingga 90%</li>
+        <li>Digital display</li>
+        <li>Preset menu</li>
+        <li>Dishwasher safe parts</li>
+      </ul><br>
+      <p>Garansi Resmi Philips 2 Tahun</p>
     `,
   },
   {
     id: 11,
-    name: 'Stainless Steel Water Bottle',
-    price: 'Rp100.000 - Rp250.000',
-    category: 'Olahraga & Outdoor',
-    subcategory: 'Aksesoris',
+    name: 'Xiaomi Smart Band 8',
+    price: 'Rp549.000 - Rp599.000',
+    category: 'Elektronik',
+    subcategory: 'Wearable',
     images: [
-      'https://images.unsplash.com/photo-1602143407151-3b6f7a4f8b5f',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/xiaomi-band8-1.jpg',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/xiaomi-band8-2.jpg',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Botol air stainless steel dengan desain tahan bocor.</p><br>
-      <h4>Spesifikasi:</h4>
+      <p>Smartband canggih dengan fitur kesehatan lengkap</p><br>
+      <h4>Fitur Utama:</h4>
       <ul>
-        <li>Kapasitas: 750ml</li>
-        <li>Insulasi termal 12 jam</li>
-        <li>BPA-free</li>
+        <li>Layar AMOLED 1.62"</li>
+        <li>SpO2 & Heart Rate Monitoring</li>
+        <li>110+ Mode Olahraga</li>
+        <li>Waterproof 5ATM</li>
       </ul><br>
-      <p>Cocok untuk bepergian atau olahraga.</p>
+      <p>Garansi Resmi 1 Tahun</p>
     `,
   },
   {
     id: 12,
-    name: 'Wireless Charger 15W',
-    price: 'Rp150.000 - Rp350.000',
-    category: 'Elektronik',
-    subcategory: 'Aksesoris',
+    name: 'Wardah Perfect Bright Moisturizer 20ml',
+    price: 'Rp25.000 - Rp30.000',
+    category: 'Kesehatan & Kecantikan',
+    subcategory: 'Skincare',
     images: [
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/wardah-moisturizer-1.jpg',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Charger nirkabel cepat dengan desain minimalis.</p><br>
-      <h4>Fitur:</h4>
+      <p>Pelembap wajah pencerah dengan Vitamin B3</p><br>
+      <h4>Manfaat:</h4>
       <ul>
-        <li>Fast charging 15W</li>
-        <li>Kompatibel dengan Qi-enabled devices</li>
-        <li>Anti-slip pad</li>
+        <li>Mencerahkan kulit kusam</li>
+        <li>Menghidrasi kulit sepanjang hari</li>
+        <li>Mengontrol minyak berlebih</li>
       </ul><br>
-      <p>Mudah digunakan untuk semua jenis smartphone.</p>
+      <p>BPOM: NA18200123456</p>
     `,
   },
   {
     id: 13,
-    name: 'Air Purifier Compact',
-    price: 'Rp800.000 - Rp1.500.000',
-    category: 'Perlengkapan Rumah',
-    subcategory: 'Elektronik',
+    name: 'Toyota Avanza 1.5 G M/T 2023',
+    price: 'Rp248.000.000 - Rp265.000.000',
+    category: 'Otomotif',
+    subcategory: 'Mobil',
     images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/avanza2023-1.jpg',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/avanza2023-2.jpg',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Purifier udara kompak untuk ruangan hingga 20 m².</p><br>
-      <h4>Fitur:</h4>
+      <p>MPV keluarga nyaman dan irit BBM</p><br>
+      <h4>Spesifikasi:</h4>
       <ul>
-        <li>Filter HEPA H13</li>
-        <li>3 tingkat kecepatan</li>
-        <li>Mode malam senyap</li>
+        <li>Mesin: 1500cc Dual VVT-i</li>
+        <li>Transmisi: Manual 5-speed</li>
+        <li>Warna: Putih, Hitam, Silver</li>
+        <li>Garansi: 3 Tahun / 100.000 KM</li>
       </ul><br>
-      <p>Menjaga udara tetap bersih dan sehat.</p>
+      <p>Bonus: Gratis kaca film, karpet dasar, cover jok</p>
     `,
   },
   {
     id: 14,
-    name: 'Backpack Anti-Theft',
-    price: 'Rp300.000 - Rp600.000',
-    category: 'Aksesoris',
-    subcategory: 'Tas',
+    name: 'Samsung Galaxy S23 Ultra',
+    price: 'Rp1.299.000 - Rp1.499.000',
+    category: 'Elektronik',
+    subcategory: 'Smartphone',
     images: [
-      'https://images.unsplash.com/photo-1553062407-98eeb64c6a62',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/s23ultra-1.jpg',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/s23ultra-2.jpg',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Tas ransel dengan fitur anti-maling dan kompartemen laptop.</p><br>
-      <h4>Fitur:</h4>
+      <p>Smartphone flagship dengan kamera terbaik</p><br>
+      <h4>Fitur Utama:</h4>
       <ul>
-        <li>Resleting tersembunyi</li>
-        <li>Port USB charging</li>
-        <li>Tahan air</li>
+        <li>Layar 6.8" Dynamic AMOLED 2X</li>
+        <li>Triple 200MP Ultra-wide, Wide, Telephoto</li>
+        <li>Snapdragon 8 Gen 2</li>
+        <li>5000mAh, 45W Fast Charging</li>
       </ul><br>
-      <p>Cocok untuk perjalanan dan penggunaan sehari-hari.</p>
+      <p>Garansi Resmi 1 Tahun</p>
     `,
   },
   {
     id: 15,
-    name: 'Electric Toothbrush',
-    price: 'Rp200.000 - Rp500.000',
-    category: 'Kesehatan & Kecantikan',
-    subcategory: 'Perawatan Pribadi',
-    images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
+    name: 'Sony WH-1000XM5',
+    price: 'Rp1.999.000 - Rp2.299.000',
+    category: 'Elektronik',
+    subcategory: 'Headphone',
+    images: [ 
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/wh1000xm5-1.jpg',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/wh1000xm5-2.jpg',
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Sikat gigi elektrik dengan teknologi pembersihan mendalam.</p><br>
-      <h4>Fitur:</h4>
+      <p>Headphone noise-cancelling terbaik</p><br> 
+      <h4>Fitur Utama:</h4>
       <ul>
-        <li>3 mode sikat</li>
-        <li>Timer 2 menit</li>
-        <li>Baterai tahan 30 hari</li>
-      </ul><br>
-      <p>Untuk senyum yang lebih cerah setiap hari.</p>
+        <li>Active Noise Cancellation</li>
+        <li>30-hour battery life</li>
+        <li>Bluetooth 5.0</li>
+      </ul><br> 
+      <p>Garansi Resmi 1 Tahun</p>
     `,
   },
   {
     id: 16,
-    name: 'Portable Power Bank 10000mAh',
-    price: 'Rp150.000 - Rp300.000',
+    name: 'Apple AirPods Pro 2',  
+    price: 'Rp1.999.000 - Rp2.299.000',
     category: 'Elektronik',
-    subcategory: 'Aksesoris',
+    subcategory: 'Headphone',
     images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/airpodspro2-1.jpg',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/airpodspro2-2.jpg', 
     ],
     description: `
       <h3>Deskripsi Produk</h3>
-      <p>Power bank ringkas dengan kapasitas besar untuk pengisian cepat.</p><br>
-      <h4>Spesifikasi:</h4>
-      <ul>
-        <li>Kapasitas: 10000mAh</li>
-        <li>Output: USB-C dan USB-A</li>
-        <li>Fast charging 18W</li>
-      </ul><br>
-      <p>Sempurna untuk perjalanan jauh.</p>
+      <p>Headphone noise-cancelling terbaik</p><br> 
+      <h4>Fitur Utama:</h4>
+      <ul>    
+        <li>Active Noise Cancellation</li>
+        <li>30-hour battery life</li>
+        <li>Bluetooth 5.0</li>
+      </ul><br> 
+      <p>Garansi Resmi 1 Tahun</p>
     `,
   },
   {
     id: 17,
-    name: 'Non-Stick Frying Pan 24cm',
-    price: 'Rp100.000 - Rp250.000',
-    category: 'Peralatan Dapur',
-    subcategory: 'Cookware',
+    name: 'Samsung Galaxy S23 Ultra',
+    price: 'Rp1.299.000 - Rp1.499.000',
+    category: 'Elektronik',
+    subcategory: 'Smartphone',
     images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/s23ultra-1.jpg',
+      'https://images.tokopedia.net/img/cache/700/product-1/2024/5/31/1045828/s23ultra-2.jpg',
     ],
     description: `
-      <h3>Deskripsi Produk</h3>
-      <p>Wajan anti-lengket untuk memasak mudah dan sehat.</p><br>
-      <h4>Fitur:</h4>
+      <h3>Deskripsi Produk</h3> 
+      <p>Smartphone flagship dengan kamera terbaik</p><br>
+      <h4>Fitur Utama:</h4>
       <ul>
-        <li>Lapisan anti-lengket PFOA-free</li>
-        <li>Pegangan tahan panas</li>
-        <li>Cocok untuk semua kompor</li>
+        <li>Layar 6.8" Dynamic AMOLED 2X</li>
+        <li>Triple 200MP Ultra-wide, Wide, Telephoto</li>
+        <li>Snapdragon 8 Gen 2</li>
+        <li>5000mAh, 45W Fast Charging</li>
       </ul><br>
-      <p>Ideal untuk masakan sehari-hari.</p>
+      <p>Garansi Resmi 1 Tahun</p>
     `,
-  },
-  {
-    id: 18,
-    name: 'Foldable Travel Umbrella',
-    price: 'Rp50.000 - Rp150.000',
-    category: 'Aksesoris',
-    subcategory: 'Travel',
-    images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
-    ],
-    description: `
-      <h3>Deskripsi Produk</h3>
-      <p>Payung lipat ringan dan tahan angin untuk bepergian.</p><br>
-      <h4>Fitur:</h4>
-      <ul>
-        <li>Material tahan air</li>
-        <li>Desain anti-angin</li>
-        <li>Ukuran kompak saat dilipat</li>
-      </ul><br>
-      <p>Cocok untuk musim hujan.</p>
-    `,
-  },
-  {
-    id: 19,
-    name: 'LED Desk Lamp',
-    price: 'Rp200.000 - Rp400.000',
-    category: 'Perlengkapan Rumah',
-    subcategory: 'Elektronik',
-    images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-    ],
-    description: `
-      <h3>Deskripsi Produk</h3>
-      <p>Lampu meja LED dengan pengaturan cahaya yang fleksibel.</p><br>
-      <h4>Fitur:</h4>
-      <ul>
-        <li>3 tingkat kecerahan</li>
-        <li>Port USB untuk charging</li>
-        <li>Desain adjustable</li>
-      </ul><br>
-      <p>Cocok untuk belajar atau bekerja.</p>
-    `,
-  },
-  {
-    id: 20,
-    name: 'Nokia Wireless Gaming Headset',
-    price: 'Rp600.000 - Rp1.200.000',
-    category: 'Gaming & Hiburan',
-    subcategory: 'Audio',
-    images: [
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
-      'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
-      'https://images.unsplash.com/photo-1622560480654-2e4b1b1a6b41',
-    ],
-    description: `
-      <h3>Deskripsi Produk</h3>
-      <p>Headset gaming nirkabel dengan suara surround 7.1.</p><br>
-      <h4>Fitur:</h4>
-      <ul>
-        <li>Mikrofon noise-cancelling</li>
-        <li>Baterai hingga 18 jam</li>
-        <li>Kompatibel dengan PC dan konsol</li>
-      </ul><br>
-      <p>Memberikan pengalaman gaming imersif.</p>
-    `,
-  },
+  } 
 ];

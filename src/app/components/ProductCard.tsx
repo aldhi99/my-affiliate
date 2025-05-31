@@ -21,7 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <Link href={`/produk/${product.id}`} className="block group">
       <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
         {/* Image Container */}
-        <div className="relative w-full aspect-square overflow-hidden bg-gray-50">
+        <div className="pl-4 relative w-full aspect-square overflow-hidden bg-gray-50">
           <Image
             src={mainImage}
             alt={product.name}
@@ -40,11 +40,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {product.name}
           </h3>
           <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-primary-color">{product.price}</p>
-            <span className="text-xs text-secondary-color group-hover:translate-x-1 transition-transform">
+            <p className="text-sm font-medium text-primary-color truncate-1-lines">{product.price}</p>
+            <span className="text-xs text-secondary-color group-hover:translate-x-1 transition-transform w-20">
               Lihat Detail →
             </span>
-          </div>
+          </div> 
         </div>
       </div>
     </Link>
