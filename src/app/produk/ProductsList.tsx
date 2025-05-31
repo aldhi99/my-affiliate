@@ -199,7 +199,7 @@ export default function ProductsList() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProducts.slice(0, visibleProducts).map((product) => (
                 <Link 
-                  href={`/produk/${product.id}`} 
+                  href={`/produk/${product.slug}`} 
                   key={product.id}
                   className="transform transition-all duration-300 ease-in-out hover:scale-[1.02]"
                 >

@@ -16,9 +16,9 @@ const Header: React.FC = () => {
             <Image
               src="/logo.png"
               alt="dPinus Shop Logo"
-              width={40}
-              height={40}
-              className="w-10 h-10 object-contain rounded-full"
+              width={30}
+              height={30}
+              className="w-10 h-10 object-contain rounded-full shadow-lg mr-2"
               priority
             />
             <span className="text-2xl font-bold text-foreground hover:text-primary-color transition-colors">

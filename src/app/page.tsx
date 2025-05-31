@@ -1,6 +1,7 @@
 import Header from './components/Header';
 import Footer from './components/Footer';
 import NewProductsMarquee from './components/NewProductsMarquee';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -18,9 +19,9 @@ export default function Home() {
                 Dapatkan produk eksklusif dan modern dari brand ternama, tersedia di platform favorit Anda. Tingkatkan gaya hidup Anda dengan belanja yang mudah dan cepat!
               </p>
               <div className="flex justify-center gap-4">
-                <a href="#products" className="btn">
+                <Link href="/produk" className="btn">
                   Belanja Sekarang
-                </a>
+                </Link>
               </div>
             </div>
           </div>

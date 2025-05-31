@@ -6,6 +6,7 @@ export interface Product {
   description: string;
   category: string;
   subcategory?: string;
+  slug: string;
 }
 
 export const categories = [
@@ -24,6 +25,7 @@ export const products: Product[] = [
   {
     id: 1,
     name: 'Samsung Galaxy A54 5G 8/256GB - Awesome Black',
+    slug: 'samsung-galaxy-a54-5g-8-256gb-awesome-black',
     price: 'Rp5.999.000 - Rp6.499.000',
     category: 'Elektronik',
     subcategory: 'Smartphone',
@@ -59,6 +61,7 @@ export const products: Product[] = [
   {
     id: 2,
     name: 'Emina Bright Stuff Face Serum 30ml',
+    slug: 'emina-bright-stuff-face-serum-30ml',
     price: 'Rp89.000 - Rp99.000',
     category: 'Kesehatan & Kecantikan',
     subcategory: 'Skincare',
@@ -90,6 +93,7 @@ export const products: Product[] = [
   {
     id: 3,
     name: 'Cosmos CB-282 Rice Cooker 1.8L',
+    slug: 'cosmos-cb-282-rice-cooker-1-8l',
     price: 'Rp299.000 - Rp349.000',
     category: 'Rumah Tangga',
     subcategory: 'Peralatan Dapur',
@@ -121,6 +125,7 @@ export const products: Product[] = [
   {
     id: 4,
     name: 'Nike Air Force 1 Low White',
+    slug: 'nike-air-force-1-low-white',
     price: 'Rp1.999.000 - Rp2.299.000',
     category: 'Fashion',
     subcategory: 'Sepatu',
@@ -154,6 +159,7 @@ export const products: Product[] = [
   {
     id: 5,
     name: 'Mamypoko Pants L 44s',
+    slug: 'mamypoko-pants-l-44s',
     price: 'Rp189.000 - Rp199.000',
     category: 'Ibu & Anak',
     subcategory: 'Popok',
@@ -184,6 +190,7 @@ export const products: Product[] = [
   {
     id: 6,
     name: 'Indomie Goreng Special 1 Dus (40 pcs)',
+    slug: 'indomie-goreng-special-1-dus-40-pcs',
     price: 'Rp89.000 - Rp99.000',
     category: 'Makanan & Minuman',
     subcategory: 'Mie Instan',
@@ -214,6 +221,7 @@ export const products: Product[] = [
   {
     id: 7,
     name: 'Logitech G Pro X Superlight Wireless Mouse',
+    slug: 'logitech-g-pro-x-superlight-wireless-mouse',
     price: 'Rp1.999.000 - Rp2.299.000',
     category: 'Gaming & Hiburan',
     subcategory: 'Gaming Gear',
@@ -246,6 +254,7 @@ export const products: Product[] = [
   {
     id: 8,
     name: 'Shell Helix HX7 5W-40 4L',
+    slug: 'shell-helix-hx7-5w-40-4l',
     price: 'Rp399.000 - Rp449.000',
     category: 'Otomotif',
     subcategory: 'Oli & Pelumas',
@@ -277,6 +286,7 @@ export const products: Product[] = [
   {
     id: 9,
     name: 'Decathlon Forclaz Trek 100 50L',
+    slug: 'decathlon-forclaz-trek-100-50l',
     price: 'Rp799.000 - Rp899.000',
     category: 'Olahraga & Outdoor',
     subcategory: 'Tas Ransel',
@@ -309,6 +319,7 @@ export const products: Product[] = [
   {
     id: 10,
     name: 'Philips Airfryer HD9200/91',
+    slug: 'philips-airfryer-hd9200-91',
     price: 'Rp1.999.000 - Rp2.299.000',
     category: 'Rumah Tangga',
     subcategory: 'Peralatan Dapur',
@@ -341,6 +352,7 @@ export const products: Product[] = [
   {
     id: 11,
     name: 'Xiaomi Smart Band 8',
+    slug: 'xiaomi-smart-band-8',
     price: 'Rp549.000 - Rp599.000',
     category: 'Elektronik',
     subcategory: 'Wearable',
@@ -364,6 +376,7 @@ export const products: Product[] = [
   {
     id: 12,
     name: 'Wardah Perfect Bright Moisturizer 20ml',
+    slug: 'wardah-perfect-bright-moisturizer-20ml',
     price: 'Rp25.000 - Rp30.000',
     category: 'Kesehatan & Kecantikan',
     subcategory: 'Skincare',
@@ -385,6 +398,7 @@ export const products: Product[] = [
   {
     id: 13,
     name: 'Toyota Avanza 1.5 G M/T 2023',
+    slug: 'toyota-avanza-1-5-g-m-t-2023',
     price: 'Rp248.000.000 - Rp265.000.000',
     category: 'Otomotif',
     subcategory: 'Mobil',
@@ -408,6 +422,7 @@ export const products: Product[] = [
   {
     id: 14,
     name: 'Samsung Galaxy S23 Ultra',
+    slug: 'samsung-galaxy-s23-ultra',
     price: 'Rp1.299.000 - Rp1.499.000',
     category: 'Elektronik',
     subcategory: 'Smartphone',
@@ -431,6 +446,7 @@ export const products: Product[] = [
   {
     id: 15,
     name: 'Sony WH-1000XM5',
+    slug: 'sony-wh-1000xm5',
     price: 'Rp1.999.000 - Rp2.299.000',
     category: 'Elektronik',
     subcategory: 'Headphone',
@@ -453,6 +469,7 @@ export const products: Product[] = [
   {
     id: 16,
     name: 'Apple AirPods Pro 2',  
+    slug: 'apple-airpods-pro-2',
     price: 'Rp1.999.000 - Rp2.299.000',
     category: 'Elektronik',
     subcategory: 'Headphone',
@@ -475,6 +492,7 @@ export const products: Product[] = [
   {
     id: 17,
     name: 'Samsung Galaxy S23 Ultra',
+    slug: 'samsung-galaxy-s23-ultra-2',
     price: 'Rp1.299.000 - Rp1.499.000',
     category: 'Elektronik',
     subcategory: 'Smartphone',
