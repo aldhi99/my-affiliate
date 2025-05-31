@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import Image from 'next/image';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,8 +12,18 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-5">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-foreground hover:text-primary-color transition-colors">
-            dPinus Shop
+          <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+            <Image
+              src="/logo.png"
+              alt="dPinus Shop Logo"
+              width={40}
+              height={40}
+              className="w-10 h-10 object-contain rounded-full"
+              priority
+            />
+            <span className="text-2xl font-bold text-foreground hover:text-primary-color transition-colors">
+              dPinus Shop
+            </span>
           </Link>
 
           {/* Navigation */}
