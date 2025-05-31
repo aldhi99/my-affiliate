@@ -2,10 +2,12 @@ import { Metadata } from 'next';
 import { products } from '@/data/products';
 import ProductClient from './ProductClient';
 
-type Props = {
+interface PageProps {
   params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
+
+type Props = PageProps;
 
 export async function generateMetadata(
   { params }: Props
