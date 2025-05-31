@@ -80,8 +80,14 @@ export default function ProductsList() {
     return () => observer.disconnect();
   }, [filteredProducts.length]);
 
-  // Get all unique subcategories
+  // Reset subcategory when category changes
+  useEffect(() => {
+    setSelectedSubcategory('all');
+  }, [selectedCategory]);
+
+  // Get all unique subcategories based on selected category
   const subcategories = [...new Set(products
+    .filter(p => selectedCategory === 'all' || p.category === selectedCategory)
     .map(p => p.subcategory)
     .filter((s): s is string => s !== undefined))];
 
@@ -192,21 +198,30 @@ export default function ProductsList() {
             {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProducts.slice(0, visibleProducts).map((product) => (
-                <Link href={`/produk/${product.id}`} key={product.id}>
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="relative h-48 w-full">
+                <Link 
+                  href={`/produk/${product.id}`} 
+                  key={product.id}
+                  className="transform transition-all duration-300 ease-in-out hover:scale-[1.02]"
+                >
+                  <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <div className="relative h-48 w-full overflow-hidden">
                       <Image
                         src={product.images[0]}
                         alt={product.name}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-500 hover:scale-110"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
                     </div>
                     <div className="p-4 pt-2">
                       <div className="flex flex-col gap-1">
-                        <h2 className="text-lg font-semibold line-clamp-2 h-[60px]">{product.name}</h2>
-                        <p className="text-gray-600 text-sm underline truncate-1-lines">{product.price}</p>
-                        <p className="text-sm text-gray-500 line-clamp-2 mt-2">
+                        <h2 className="text-lg font-semibold line-clamp-2 h-[60px] transition-colors duration-200 hover:text-primary-color">
+                          {product.name}
+                        </h2>
+                        <p className="text-gray-600 text-sm underline truncate-1-lines transition-colors duration-200">
+                          {product.price}
+                        </p>
+                        <p className="text-sm text-gray-500 line-clamp-2 mt-2 transition-colors duration-200">
                           {product.description
                             .replace(/<[^>]*>/g, '')
                             .replace(/deskripsi produk/gi, '')                  
@@ -225,7 +240,7 @@ export default function ProductsList() {
                 ref={loadMoreRef} 
                 className="w-full h-20 flex items-center justify-center mt-8"
               >
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-color"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-color transition-opacity duration-300"></div>
               </div>
             )}
           </div>
