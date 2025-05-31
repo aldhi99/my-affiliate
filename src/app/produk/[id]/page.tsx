@@ -3,7 +3,7 @@ import { products } from '@/data/products';
 import ProductClient from './ProductClient';
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>; // Update to Promise
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
@@ -12,13 +12,14 @@ type Props = PageProps;
 export async function generateMetadata(
   { params }: Props
 ): Promise<Metadata> {
-  const product = products.find((p) => p.id === parseInt(params.id))
-  
+  const resolvedParams = await params; // Await the params Promise
+  const product = products.find((p) => p.id === parseInt(resolvedParams.id));
+
   if (!product) {
     return {
       title: 'Produk Tidak Ditemukan',
       description: 'Maaf, produk yang Anda cari tidak ditemukan.'
-    }
+    };
   }
 
   // Clean HTML tags from description
@@ -26,10 +27,10 @@ export async function generateMetadata(
     .replace(/<[^>]*>/g, '')
     .replace(/deskripsi produk/gi, '')
     .replace(/keterangan produk/gi, '')
-    .trim()
-  
+    .trim();
+
   // Get first image as og image
-  const firstImage = product.images[0]
+  const firstImage = product.images[0];
 
   return {
     title: product.name,
@@ -56,9 +57,10 @@ export async function generateMetadata(
     alternates: {
       canonical: `/produk/${product.id}`
     }
-  }
+  };
 }
 
-export default function Page({ params }: Props) {
-  return <ProductClient params={params} />;
+export default async function Page({ params }: Props) {
+  const resolvedParams = await params; // Await the params Promise
+  return <ProductClient params={resolvedParams} />;
 }
