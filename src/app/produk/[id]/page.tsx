@@ -3,7 +3,8 @@ import { products } from '@/data/products';
 import ProductClient from './ProductClient';
 
 type Props = {
-  params: { id: string }
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export async function generateMetadata(
