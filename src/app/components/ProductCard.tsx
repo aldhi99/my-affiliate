@@ -18,22 +18,34 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const mainImage = product.images[0];
   
   return (
-    <Link href={`/products/${product.id}`} className="card block">
-      <div className="relative w-full aspect-square mb-4 overflow-hidden rounded-t-lg">
-        <Image
-          src={mainImage}
-          alt={product.name}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="img-hover object-cover"
-          priority={false}
-        />
-      </div>
-      <div className="px-3">
-        <h3 className="text-sm sm:text-lg font-semibold mb-2 text-foreground h-[40px] sm:h-[60px] truncate-2-lines">
-          {product.name}
-        </h3>
-        <p className="text-xs sm:text-sm font-medium mb-4 text-secondary-color">{product.price}</p>
+    <Link href={`/produk/${product.id}`} className="block group">
+      <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+        {/* Image Container */}
+        <div className="relative w-full aspect-square overflow-hidden bg-gray-50">
+          <Image
+            src={mainImage}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            priority={false}
+          />
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
+
+        {/* Content */}
+        <div className="p-4">
+          <h3 className="text-base font-semibold text-foreground mb-2 line-clamp-2 min-h-[2.5rem] group-hover:text-primary-color transition-colors">
+            {product.name}
+          </h3>
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-primary-color">{product.price}</p>
+            <span className="text-xs text-secondary-color group-hover:translate-x-1 transition-transform">
+              Lihat Detail →
+            </span>
+          </div>
+        </div>
       </div>
     </Link>
   );

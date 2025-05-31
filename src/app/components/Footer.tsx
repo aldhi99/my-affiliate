@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-white mt-24 border-t border-border-color py-16 mb-20 md:mb-0">
+    <footer className="bg-white mt-24 border-t border-border-color py-16 mb-2 md:mb-0">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Company Info */}
@@ -23,18 +23,18 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="text-secondary-color hover:text-primary-color transition-colors">
-                  Products
+                <Link href="/produk" className="text-secondary-color hover:text-primary-color transition-colors">
+                  Produk
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-secondary-color hover:text-primary-color transition-colors">
-                  About
+                <Link href="/tentang-kami" className="text-secondary-color hover:text-primary-color transition-colors">
+                  Tentang Kami
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-secondary-color hover:text-primary-color transition-colors">
-                  Contact
+                <Link href="/kontak" className="text-secondary-color hover:text-primary-color transition-colors">
+                  Kontak
                 </Link>
               </li>
             </ul>
@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-border-color text-center text-secondary-color">
+        <div className="mt-8 pt-8 border-t border-border-color text-center text-secondary-color">
           <p>&copy; {new Date().getFullYear()} E-Shop. All rights reserved.</p>
         </div>
       </div>

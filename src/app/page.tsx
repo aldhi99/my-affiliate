@@ -1,12 +1,6 @@
 import Header from './components/Header';
 import Footer from './components/Footer';
-import ProductCard from './components/ProductCard';
-import { products as allProducts } from '../data/products';
-
-// Get the 3 newest products (assuming higher ID means newer product)
-const products = [...allProducts]
-  .sort((a, b) => b.id - a.id)
-  .slice(0, 4);
+import NewProductsMarquee from './components/NewProductsMarquee';
 
 export default function Home() {
   return (
@@ -21,7 +15,7 @@ export default function Home() {
                 Temukan Produk Modern untuk Gaya Hidup Anda
               </h1>
               <p className="text-xl text-secondary-color mb-8 leading-relaxed">
-              Dapatkan produk eksklusif dan modern dari brand ternama, tersedia di platform favorit Anda. Tingkatkan gaya hidup Anda dengan belanja yang mudah dan cepat!
+                Dapatkan produk eksklusif dan modern dari brand ternama, tersedia di platform favorit Anda. Tingkatkan gaya hidup Anda dengan belanja yang mudah dan cepat!
               </p>
               <div className="flex justify-center gap-4">
                 <a href="#products" className="btn">
@@ -32,19 +26,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* New Product Section */}
-        <section id="products" className="section bg-background">
-          <div className="container mx-auto px-4">
-            <h2 className="section-title text-foreground text-2xl sm:text-4xl font-bold">
-              Produk Terbaru
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* New Products Marquee Section */}
+        <NewProductsMarquee />
 
         {/* Features Section */}
         <section className="section bg-hover-color">

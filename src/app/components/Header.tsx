@@ -8,7 +8,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="bg-white mb-5 border-b border-border-color sticky top-0 z-50 backdrop-blur-sm bg-opacity-90">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-5">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="text-2xl font-bold text-foreground hover:text-primary-color transition-colors">
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
             <Link href="/" className="nav-link">
               Home
             </Link>
-            <Link href="/products" className="nav-link">
+            <Link href="/produk" className="nav-link">
               Produk
             </Link>
             <Link href="/tentang-kami" className="nav-link">
@@ -66,25 +66,25 @@ const Header: React.FC = () => {
                 Home
               </Link>
               <Link 
-                href="/products" 
+                href="/produk" 
                 className="nav-link px-4 py-2 hover:bg-hover-color rounded-lg"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Products
+                Produk
               </Link>
               <Link 
-                href="/about" 
+                href="/tentang-kami" 
                 className="nav-link px-4 py-2 hover:bg-hover-color rounded-lg"
                 onClick={() => setIsMenuOpen(false)}
               >
-                About
+                Tentang Kami
               </Link>
               <Link 
-                href="/contact" 
+                href="/kontak" 
                 className="nav-link px-4 py-2 hover:bg-hover-color rounded-lg"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Contact
+                Kontak
               </Link>
             </nav>
           </div>

@@ -213,6 +213,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Modern Truncate Styles */
+.truncate-1-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .truncate-2-lines {
   display: -webkit-box;
   -webkit-line-clamp: 2;

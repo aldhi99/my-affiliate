@@ -4,13 +4,27 @@ export interface Product {
   price: string;
   images: string[];
   description: string;
+  category: string;
+  subcategory?: string;
 }
+
+export const categories = [
+  'Elektronik',
+  'Perlengkapan Rumah',
+  'Olahraga & Outdoor',
+  'Kesehatan & Kecantikan',
+  'Aksesoris',
+  'Peralatan Dapur',
+  'Gaming & Hiburan'
+] as const;
 
 export const products: Product[] = [
   {
     id: 1,
     name: 'Wireless Earbuds Pro',
     price: 'Rp250.000 - Rp600.000',
+    category: 'Elektronik',
+    subcategory: 'Audio',
     images: [
       'https://images.unsplash.com/photo-1590658268034-2383e8a4f9df',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
@@ -33,6 +47,8 @@ export const products: Product[] = [
     id: 2,
     name: 'Premium Dog Food 1kg',
     price: 'Rp50.000 - Rp100.000',
+    category: 'Perlengkapan Rumah',
+    subcategory: 'Pet Supplies',
     images: [
       'https://images.unsplash.com/photo-1601758260955-2e5a9a4d4a3b',
       'https://images.unsplash.com/photo-1589924741906-8a8f7f2a8e8f',
@@ -59,6 +75,8 @@ export const products: Product[] = [
     id: 3,
     name: 'Ergonomic Office Chair',
     price: 'Rp1.200.000 - Rp2.000.000',
+    category: 'Perlengkapan Rumah',
+    subcategory: 'Furniture',
     images: [
       'https://images.unsplash.com/photo-1582719183515-64b7b0a50a0d',
       'https://images.unsplash.com/photo-1590587899744-5c7e8c0a8b0c',
@@ -82,6 +100,8 @@ export const products: Product[] = [
     id: 4,
     name: 'Smart Watch Fitness',
     price: 'Rp500.000 - Rp900.000',
+    category: 'Elektronik',
+    subcategory: 'Wearables',
     images: [
       'https://images.unsplash.com/photo-1546868871-7041f2a55e12',
       'https://images.unsplash.com/photo-1559056199-641a63781cce',
@@ -104,6 +124,8 @@ export const products: Product[] = [
     id: 5,
     name: 'Running Shoes Men',
     price: 'Rp400.000 - Rp700.000',
+    category: 'Olahraga & Outdoor',
+    subcategory: 'Sepatu',
     images: [
       'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa',
       'https://images.unsplash.com/photo-1600185365483-26d7a3b86a04',
@@ -126,6 +148,8 @@ export const products: Product[] = [
     id: 6,
     name: 'Portable Bluetooth Speaker',
     price: 'Rp300.000 - Rp800.000',
+    category: 'Elektronik',
+    subcategory: 'Audio',
     images: [
       'https://images.unsplash.com/photo-1542182069-81f3c5a4f9f5',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
@@ -149,6 +173,8 @@ export const products: Product[] = [
     id: 7,
     name: 'Gaming Keyboard RGB',
     price: 'Rp350.000 - Rp600.000',
+    category: 'Gaming & Hiburan',
+    subcategory: 'Peripheral',
     images: [
       'https://images.unsplash.com/photo-1587829748823-f550f3122b0e',
       'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
@@ -171,6 +197,8 @@ export const products: Product[] = [
     id: 8,
     name: 'Electric Kettle 1.7L',
     price: 'Rp200.000 - Rp400.000',
+    category: 'Peralatan Dapur',
+    subcategory: 'Elektronik',
     images: [
       'https://images.unsplash.com/photo-1602143407151-3b6f7a4f8b5f',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
@@ -192,6 +220,8 @@ export const products: Product[] = [
     id: 9,
     name: 'Yoga Mat Premium',
     price: 'Rp150.000 - Rp300.000',
+    category: 'Olahraga & Outdoor',
+    subcategory: 'Fitness',
     images: [
       'https://images.unsplash.com/photo-1601925266748-373a9f61b7c3',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
@@ -214,6 +244,8 @@ export const products: Product[] = [
     id: 10,
     name: 'Smart Home Security Camera',
     price: 'Rp500.000 - Rp1.000.000',
+    category: 'Elektronik',
+    subcategory: 'Smart Home',
     images: [
       'https://images.unsplash.com/photo-1516321318423-4b6a0d3f0e6f',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
@@ -237,6 +269,8 @@ export const products: Product[] = [
     id: 11,
     name: 'Stainless Steel Water Bottle',
     price: 'Rp100.000 - Rp250.000',
+    category: 'Olahraga & Outdoor',
+    subcategory: 'Aksesoris',
     images: [
       'https://images.unsplash.com/photo-1602143407151-3b6f7a4f8b5f',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
@@ -258,6 +292,8 @@ export const products: Product[] = [
     id: 12,
     name: 'Wireless Charger 15W',
     price: 'Rp150.000 - Rp350.000',
+    category: 'Elektronik',
+    subcategory: 'Aksesoris',
     images: [
       'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
@@ -280,6 +316,8 @@ export const products: Product[] = [
     id: 13,
     name: 'Air Purifier Compact',
     price: 'Rp800.000 - Rp1.500.000',
+    category: 'Perlengkapan Rumah',
+    subcategory: 'Elektronik',
     images: [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
       'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
@@ -301,6 +339,8 @@ export const products: Product[] = [
     id: 14,
     name: 'Backpack Anti-Theft',
     price: 'Rp300.000 - Rp600.000',
+    category: 'Aksesoris',
+    subcategory: 'Tas',
     images: [
       'https://images.unsplash.com/photo-1553062407-98eeb64c6a62',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
@@ -324,6 +364,8 @@ export const products: Product[] = [
     id: 15,
     name: 'Electric Toothbrush',
     price: 'Rp200.000 - Rp500.000',
+    category: 'Kesehatan & Kecantikan',
+    subcategory: 'Perawatan Pribadi',
     images: [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
       'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
@@ -345,6 +387,8 @@ export const products: Product[] = [
     id: 16,
     name: 'Portable Power Bank 10000mAh',
     price: 'Rp150.000 - Rp300.000',
+    category: 'Elektronik',
+    subcategory: 'Aksesoris',
     images: [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
       'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
@@ -367,6 +411,8 @@ export const products: Product[] = [
     id: 17,
     name: 'Non-Stick Frying Pan 24cm',
     price: 'Rp100.000 - Rp250.000',
+    category: 'Peralatan Dapur',
+    subcategory: 'Cookware',
     images: [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
       'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
@@ -390,6 +436,8 @@ export const products: Product[] = [
     id: 18,
     name: 'Foldable Travel Umbrella',
     price: 'Rp50.000 - Rp150.000',
+    category: 'Aksesoris',
+    subcategory: 'Travel',
     images: [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
       'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
@@ -411,6 +459,8 @@ export const products: Product[] = [
     id: 19,
     name: 'LED Desk Lamp',
     price: 'Rp200.000 - Rp400.000',
+    category: 'Perlengkapan Rumah',
+    subcategory: 'Elektronik',
     images: [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
       'https://images.unsplash.com/photo-1614631447677-1c7e6a4f8b5f',
@@ -431,8 +481,10 @@ export const products: Product[] = [
   },
   {
     id: 20,
-    name: 'Nokia Wireless Gaming Headset bluetooth 5.0 mikrofon noise-cancelling awet hingga 100 jam',
+    name: 'Nokia Wireless Gaming Headset',
     price: 'Rp600.000 - Rp1.200.000',
+    category: 'Gaming & Hiburan',
+    subcategory: 'Audio',
     images: [
       'https://images.unsplash.com/photo-1505740420928-5e560c06d30e',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
