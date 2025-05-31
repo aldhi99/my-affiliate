@@ -13,28 +13,44 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://your-ecommerce-domain.com'),
+  metadataBase: new URL('https://dpinus.vercel.app'),
   title: {
     default: 'dPinus Shop',
     template: '%s | dPinus Shop'
   },
   description: 'Temukan berbagai produk berkualitas dengan harga terbaik. Belanja online aman, nyaman dan terpercaya dengan pengiriman cepat ke seluruh Indonesia.',
-  keywords: ['e-commerce', 'belanja online', 'toko online', 'produk', 'shopping'],
-  authors: [{ name: 'Your Company Name' }],
-  creator: 'Your Company Name',
+  keywords: ['e-commerce', 'belanja online', 'toko online', 'produk', 'shopping', 'dPinus Shop'],
+  authors: [{ name: 'dPinus Shop' }],
+  creator: 'dPinus Shop',
+  icons: {
+    icon: [
+      { url: '/logo.png', sizes: '32x32', type: 'image/jpeg' },
+      { url: '/logo.png', sizes: '16x16', type: 'image/jpeg' }
+    ],
+    apple: [
+      { url: '/logo.png', sizes: '180x180', type: 'image/jpeg' }
+    ],
+    other: [
+      {
+        rel: 'mask-icon',
+        url: '/logo.png'
+      }
+    ]
+  },
+  manifest: '/manifest.json',
   openGraph: {
     type: 'website',
     locale: 'id_ID',
-    url: 'https://your-ecommerce-domain.com',
+    url: 'https://dpinus.vercel.app',
     siteName: 'dPinus Shop',
     title: 'dPinus Shop - Belanja Online Terpercaya',
     description: 'Temukan berbagai produk berkualitas dengan harga terbaik. Belanja online aman, nyaman dan terpercaya dengan pengiriman cepat ke seluruh Indonesia.',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'dPinus Shop'
+        alt: 'dPinus Shop Logo'
       }
     ]
   },
@@ -42,7 +58,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'dPinus Shop',
     description: 'Temukan berbagai produk berkualitas dengan harga terbaik. Belanja online aman, nyaman dan terpercaya dengan pengiriman cepat ke seluruh Indonesia.',
-    images: ['/og-image.jpg'],
+    images: ['/logo.png'],
+    creator: '@dpinusshop'
   },
   robots: {
     index: true,

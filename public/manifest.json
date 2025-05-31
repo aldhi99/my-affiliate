@@ -1,0 +1,45 @@
+{
+  "name": "dPinus Shop",
+  "short_name": "dPinus",
+  "description": "Temukan berbagai produk berkualitas dengan harga terbaik. Belanja online aman, nyaman dan terpercaya dengan pengiriman cepat ke seluruh Indonesia.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "ecommerce"],
+  "screenshots": [
+    {
+      "src": "/logo.png",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "dPinus Shop Homepage"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Lihat Produk",
+      "short_name": "Produk",
+      "description": "Lihat semua produk yang tersedia",
+      "url": "/produk",
+      "icons": [{ "src": "/logo.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+} 
