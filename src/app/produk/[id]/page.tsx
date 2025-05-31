@@ -1,6 +1,6 @@
-import { Metadata } from 'next'
-import { products } from '@/data/products'
-import ProductDetail from './ProductDetail'
+import { Metadata } from 'next';
+import { products } from '@/data/products';
+import ProductClient from './ProductClient';
 
 type Props = {
   params: { id: string }
@@ -57,5 +57,5 @@ export async function generateMetadata(
 }
 
 export default function Page({ params }: Props) {
-  return <ProductDetail params={Promise.resolve(params)} />
+  return <ProductClient params={params} />;
 }
