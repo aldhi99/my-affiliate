@@ -136,7 +136,7 @@ export async function PUT(
     });
 
     const query = `
-      UPDATE produk 
+      UPDATE products 
       SET 
         name = ?, 
         price_start = ?, 
