@@ -18,6 +18,14 @@ export interface Product {
   }[];
 }
 
+export interface ProductsResponse {
+  items: Product[];
+  current_page: number;
+  total_pages: number;
+  total_items: number;
+  items_per_page: number;
+}
+
 export const categories = [
   'Elektronik',
   'Fashion',
@@ -30,9 +38,14 @@ export const categories = [
   'Otomotif'
 ] as const;
 
-export async function getProducts(): Promise<Product[]> {
+export async function getProducts(page: number = 1, size: number = 10): Promise<ProductsResponse> {
   try {
-    const response = await fetch('http://localhost:3000/api/produk');
+    const queryParams = new URLSearchParams({
+      page: page.toString(),
+      size: size.toString()
+    });
+    
+    const response = await fetch(`http://localhost:3000/api/produk?${queryParams}`);
     const result = await response.json();
     
     if (!result.status) {
@@ -42,7 +55,13 @@ export async function getProducts(): Promise<Product[]> {
     return result.data;
   } catch (error) {
     console.error('Error fetching products:', error);
-    return [];
+    return {
+      items: [],
+      current_page: 1,
+      total_pages: 1,
+      total_items: 0,
+      items_per_page: size
+    };
   }
 }
 

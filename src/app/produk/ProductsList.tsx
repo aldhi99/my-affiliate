@@ -23,11 +23,12 @@ export default function ProductsList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await getProducts();
-        setProducts(data);
+        // Fetch all products without pagination
+        const result = await getProducts(1, 1000); // Get a large number to fetch all products
+        setProducts(result.items);
         setLoading(false);
-      } catch {
-        setError('Failed to load products');
+      } catch (error) {
+        setError(error instanceof Error ? error.message : 'Failed to load products');
         setLoading(false);
       }
     };
@@ -141,130 +142,127 @@ export default function ProductsList() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Produk Kami</h1>
-          <button
-            onClick={() => setIsFilterOpen(!isFilterOpen)}
-            className="md:hidden flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50"
-          >
-            <FiFilter />
-            Filter
-          </button>
-        </div>
-        
-        <div className="flex gap-8">
-          {/* Filter Sidebar */}
-          <FilterSidebar
-            isFilterOpen={isFilterOpen}
-            setIsFilterOpen={setIsFilterOpen}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            selectedSubcategory={selectedSubcategory}
-            setSelectedSubcategory={setSelectedSubcategory}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            categories={mutableCategories}
-            subcategories={subcategories}
-          />
+      <div className="flex-1">
+        <div className="container mx-auto py-8 px-4">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Filter Sidebar */}
+            <FilterSidebar
+              isFilterOpen={isFilterOpen}
+              setIsFilterOpen={setIsFilterOpen}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              selectedSubcategory={selectedSubcategory}
+              setSelectedSubcategory={setSelectedSubcategory}
+              categories={mutableCategories}
+              subcategories={subcategories}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+            />
 
-          <div className="flex-1">
-            {/* Search Bar */}
-            <div className="relative mb-6">
-              <input
-                type="text"
-                placeholder="Cari produk..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-grey-100"
-              />
-              {searchQuery && (
+            {/* Main Content */}
+            <div className="flex-1">
+              {/* Mobile Filter Button */}
+              <div className="md:hidden mb-4">
                 <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  onClick={() => setIsFilterOpen(true)}
+                  className="flex items-center justify-center w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
                 >
-                  <FiX size={20} />
+                  <FiFilter className="mr-2" />
+                  Filter & Urutkan
                 </button>
+              </div>
+
+              {/* Active Filters */}
+              <div className="mb-6">
+                {(searchQuery || selectedCategory !== 'all' || selectedSubcategory !== 'all' || sortBy !== 'id') && (
+                  <div className="flex flex-wrap items-center gap-2 text-sm">
+                    <span className="text-gray-500">Filter aktif:</span>
+                    {searchQuery && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        Pencarian: {searchQuery}
+                        <button
+                          onClick={() => setSearchQuery('')}
+                          className="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-blue-200"
+                        >
+                          <FiX className="w-3 h-3" />
+                        </button>
+                      </span>
+                    )}
+                    {selectedCategory !== 'all' && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        Kategori: {selectedCategory}
+                        <button
+                          onClick={() => setSelectedCategory('all')}
+                          className="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-blue-200"
+                        >
+                          <FiX className="w-3 h-3" />
+                        </button>
+                      </span>
+                    )}
+                    {selectedSubcategory !== 'all' && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        Subkategori: {selectedSubcategory}
+                        <button
+                          onClick={() => setSelectedSubcategory('all')}
+                          className="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-blue-200"
+                        >
+                          <FiX className="w-3 h-3" />
+                        </button>
+                      </span>
+                    )}
+                    {sortBy !== 'id' && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        Urutan: {sortBy === 'price-asc' ? 'Harga: Rendah ke Tinggi' : 
+                                sortBy === 'price-desc' ? 'Harga: Tinggi ke Rendah' :
+                                sortBy === 'name-asc' ? 'Nama: A-Z' : 'Nama: Z-A'}
+                        <button
+                          onClick={() => setSortBy('id')}
+                          className="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-blue-200"
+                        >
+                          <FiX className="w-3 h-3" />
+                        </button>
+                      </span>
+                    )}
+                    <button
+                      onClick={() => {
+                        setSearchQuery('');
+                        setSelectedCategory('all');
+                        setSelectedSubcategory('all');
+                        setSortBy('id');
+                      }}
+                      className="text-sm text-blue-600 hover:text-blue-800 underline"
+                    >
+                      Reset semua filter
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Products Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {filteredProducts.slice(0, visibleProducts).map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+
+              {/* Load More Trigger */}
+              {visibleProducts < filteredProducts.length && (
+                <div 
+                  ref={loadMoreRef}
+                  className="h-20 flex items-center justify-center mt-8"
+                >
+                  <div className="w-8 h-8 border-4 border-primary-color border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              )}
+
+              {/* No Results */}
+              {filteredProducts.length === 0 && (
+                <div className="text-center py-12">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Tidak ada produk ditemukan</h3>
+                  <p className="text-gray-600">Coba ubah filter atau kata kunci pencarian Anda</p>
+                </div>
               )}
             </div>
-
-
-            <div className="flex flex-wrap gap-2 items-center h-[50px]">
-            {/* Active Filters */}
-            {(searchQuery || selectedCategory !== 'all' || selectedSubcategory !== 'all') && (
-              <div className='flex flex-wrap gap-2 items-center mb-6'>
-                {searchQuery && (
-                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center gap-2">
-                    Pencarian: {searchQuery}
-                    <button
-                      onClick={() => setSearchQuery('')}
-                      className="hover:text-blue-600"
-                    >
-                      <FiX size={16} />
-                    </button>
-                  </span>
-                )}
-                {selectedCategory !== 'all' && (
-                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center gap-2">
-                    Kategori: {selectedCategory}
-                    <button
-                      onClick={() => setSelectedCategory('all')}
-                      className="hover:text-blue-600"
-                    >
-                      <FiX size={16} />
-                    </button>
-                  </span>
-                )}
-                {selectedSubcategory !== 'all' && (
-                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center gap-2">
-                    Subkategori: {selectedSubcategory}
-                    <button
-                      onClick={() => setSelectedSubcategory('all')}
-                      className="hover:text-blue-600"
-                    >
-                      <FiX size={16} />
-                    </button>
-                  </span>
-                )}
-                <button
-                  onClick={() => {
-                    setSearchQuery('');
-                    setSelectedCategory('all');
-                    setSelectedSubcategory('all');
-                    setSortBy('id');
-                  }}
-                  className="text-sm text-blue-600 hover:text-blue-800 underline"
-                >
-                  Reset semua filter
-                </button>
-              </div>
-            )}
-            </div>
-
-            {/* Products Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.slice(0, visibleProducts).map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-
-            {/* Load More Trigger */}
-            {visibleProducts < filteredProducts.length && (
-              <div 
-                ref={loadMoreRef}
-                className="h-20 flex items-center justify-center mt-8"
-              >
-                <div className="w-8 h-8 border-4 border-primary-color border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            )}
-
-            {/* No Results */}
-            {filteredProducts.length === 0 && (
-              <div className="text-center py-12">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Tidak ada produk ditemukan</h3>
-                <p className="text-gray-600">Coba ubah filter atau kata kunci pencarian Anda</p>
-              </div>
-            )}
           </div>
         </div>
       </div>

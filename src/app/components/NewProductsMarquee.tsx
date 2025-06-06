@@ -14,14 +14,15 @@ const NewProductsMarquee = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await getProducts();
-        // Get the 6 newest products (assuming products are ordered by id, with higher id being newer)
-        const newestProducts = [...data]
+        const result = await getProducts(1, 6); // Get first page with 6 items
+        // Get the newest products (assuming products are ordered by id, with higher id being newer)
+        const newestProducts = [...result.items]
           .sort((a, b) => parseInt(b.id) - parseInt(a.id))
           .slice(0, 6);
         setProducts(newestProducts);
         setLoading(false);
-      } catch {
+      } catch (error) {
+        console.error('Error fetching products:', error);
         setError('Failed to load products');
         setLoading(false);
       }

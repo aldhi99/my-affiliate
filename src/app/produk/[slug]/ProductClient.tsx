@@ -30,8 +30,8 @@ export default function ProductClient({ params }: Props) {
           return;
         }
 
-        const products = await getProducts();
-        const foundProduct = products.find((p) => p.slug === productSlug);
+        const result = await getProducts(1, 100); // Get more products to ensure we find the one we need
+        const foundProduct = result.items.find((p) => p.slug === productSlug);
         
         if (!foundProduct) {
           setError('Product not found');
@@ -41,7 +41,8 @@ export default function ProductClient({ params }: Props) {
 
         setProduct(foundProduct);
         setLoading(false);
-      } catch {
+      } catch (error) {
+        console.error('Error fetching product:', error);
         setError('Failed to load product');
         setLoading(false);
       }
