@@ -7,7 +7,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import ProductGallery from '../../components/ProductGallery';
 import OrderLinks from '../../components/OrderLinks';
-import { products } from '@/data/products';
+import { getProducts, Product, formatPriceRange } from '@/data/products';
 
 type Props = {
   params: { slug: string }
@@ -15,42 +15,50 @@ type Props = {
 
 export default function ProductClient({ params }: Props) {
   const routeParams = useParams();
-  const [showFloatingOrder, setShowFloatingOrder] = useState(false);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const orderSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setShowFloatingOrder(!entry.isIntersecting);
-      },
-      {
-        threshold: 0,
-        rootMargin: '-100px 0px 0px 0px'
+    const fetchProduct = async () => {
+      try {
+        const productSlug = params?.slug || routeParams?.slug as string;
+        if (!productSlug) {
+          setError('Invalid product slug');
+          setLoading(false);
+          return;
+        }
+
+        const products = await getProducts();
+        const foundProduct = products.find((p) => p.slug === productSlug);
+        
+        if (!foundProduct) {
+          setError('Product not found');
+          setLoading(false);
+          return;
+        }
+
+        setProduct(foundProduct);
+        setLoading(false);
+      } catch {
+        setError('Failed to load product');
+        setLoading(false);
       }
+    };
+
+    fetchProduct();
+  }, [params?.slug, routeParams?.slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-primary-color border-t-transparent rounded-full animate-spin"></div>
+      </div>
     );
-
-    if (orderSectionRef.current) {
-      observer.observe(orderSectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Use slug from route params
-  const productSlug = params?.slug || routeParams?.slug as string;
-  console.log('Product Slug:', productSlug);
-
-  if (!productSlug) {
-    console.error('Invalid product slug:', params?.slug || routeParams?.slug);
-    return <ProductNotFound />;
   }
 
-  // Find product by slug
-  const product = products.find((p) => p.slug === productSlug);
-  console.log('Found product:', product);
-  
-  if (!product) {
-    console.error('Product not found with slug:', productSlug);
+  if (error || !product) {
     return <ProductNotFound />;
   }
 
@@ -61,33 +69,38 @@ export default function ProductClient({ params }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Product Gallery */}
           <div className="w-full">
-            <ProductGallery images={product.images} alt={product.name} />
+            <ProductGallery 
+              images={product.image_file.map(img => `${img.filename}`)} 
+              alt={product.name} 
+            />
           </div>
 
           {/* Product Info */}
           <div className="flex flex-col">
-            {/* Order Section */}
-            <div ref={orderSectionRef} className="mb-8">
-              <OrderLinks productName={product.name} />
+            {/* Order Section - Hidden on mobile when floating */}
+            <div ref={orderSectionRef} className="mb-8 md:block hidden">
+              <OrderLinks 
+              urlTiktok={product.url_tiktok}
+              urlShopee={product.url_shopee}
+              urlTokopedia={product.url_tokopedia}
+              />
             </div>
 
             {/* Floating Order Section for Mobile */}
-            <div 
-              className={`fixed bottom-0 left-0 right-0 bg-white border-t border-border-color p-4 md:hidden transition-transform duration-300 ${
-                showFloatingOrder ? 'translate-y-0' : 'translate-y-full'
-              }`}
-            >
-              <div className="container mx-auto">
-                <OrderLinks 
-                  productName={product.name} 
-                  iconSize="sm" 
-                  isFloating={true} 
-                />
-              </div>
+            <div className="md:hidden">
+              <OrderLinks 
+                urlTiktok={product.url_tiktok}
+                urlShopee={product.url_shopee}
+                urlTokopedia={product.url_tokopedia}
+                showTitle={false}
+                iconSize="sm"
+              />
             </div>
 
             <h1 className="text-2xl font-bold mb-3 text-foreground">{product.name}</h1>
-            <p className="text-xl sm:text-4xl font-semibold text-foreground mb-4 text-bold">{product.price}</p>
+            <p className="text-xl sm:text-4xl font-semibold text-foreground mb-4 text-bold">
+              {formatPriceRange(product.price_start, product.price_end)}
+            </p>
             <div className="mb-8">
               <div
                 className="text-lg text-secondary-color leading-relaxed border-t border-border-color pt-4"
@@ -111,7 +124,7 @@ function ProductNotFound() {
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-3xl font-bold text-foreground mb-4">Produk Tidak Ditemukan</h1>
           <p className="text-lg text-secondary-color mb-8">
-            Maaf, produk yang Anda cari tidak ditemukan atau slug produk tidak valid.
+            Maaf, produk yang Anda cari tidak ditemukan.
           </p>
           <Link 
             href="/produk" 

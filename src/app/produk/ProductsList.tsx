@@ -1,15 +1,17 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { products, categories } from '@/data/products';
+import { getProducts, Product, categories } from '@/data/products';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Image from 'next/image';
-import Link from 'next/link';
 import { FiFilter, FiX } from 'react-icons/fi';
 import FilterSidebar from '../components/FilterSidebar';
+import ProductCard from '../components/ProductCard';
 
 export default function ProductsList() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -17,6 +19,21 @@ export default function ProductsList() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [visibleProducts, setVisibleProducts] = useState<number>(8);
   const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+        setLoading(false);
+      } catch {
+        setError('Failed to load products');
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const parsePrice = (price: string) => {
     return parseInt(price.replace(/[^0-9]/g, ''));
@@ -39,15 +56,15 @@ export default function ProductsList() {
   }).sort((a, b) => {
     switch (sortBy) {
       case 'price-asc':
-        return parsePrice(a.price.split(' - ')[0]) - parsePrice(b.price.split(' - ')[0]);
+        return parsePrice(a.price_start) - parsePrice(b.price_start);
       case 'price-desc':
-        return parsePrice(b.price.split(' - ')[0]) - parsePrice(a.price.split(' - ')[0]);
+        return parsePrice(b.price_start) - parsePrice(a.price_start);
       case 'name-asc':
         return a.name.localeCompare(b.name);
       case 'name-desc':
         return b.name.localeCompare(a.name);
       default:
-        return 0;
+        return parseInt(b.id) - parseInt(a.id); // Default sort by newest
     }
   });
 
@@ -91,8 +108,35 @@ export default function ProductsList() {
     .map(p => p.subcategory)
     .filter((s): s is string => s !== undefined))];
 
-  // Convert readonly categories to mutable array
+  // Convert readonly categories
   const mutableCategories = [...categories];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col bg-white">
+        <Header />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="w-8 h-8 border-4 border-primary-color border-t-transparent rounded-full animate-spin"></div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col bg-white">
+        <Header />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-red-600 mb-2">Error</h2>
+            <p className="text-gray-600">{error}</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -132,7 +176,7 @@ export default function ProductsList() {
                 placeholder="Cari produk..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-grey-100"
               />
               {searchQuery && (
                 <button
@@ -144,10 +188,11 @@ export default function ProductsList() {
               )}
             </div>
 
+
+            <div className="flex flex-wrap gap-2 items-center h-[50px]">
             {/* Active Filters */}
             {(searchQuery || selectedCategory !== 'all' || selectedSubcategory !== 'all') && (
-              <div className="flex flex-wrap gap-2 items-center mb-6">
-                <span className="text-sm text-gray-600">Filter aktif:</span>
+              <div className='flex flex-wrap gap-2 items-center mb-6'>
                 {searchQuery && (
                   <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center gap-2">
                     Pencarian: {searchQuery}
@@ -194,53 +239,30 @@ export default function ProductsList() {
                 </button>
               </div>
             )}
+            </div>
 
             {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProducts.slice(0, visibleProducts).map((product) => (
-                <Link 
-                  href={`/produk/${product.slug}`} 
-                  key={product.id}
-                  className="transform transition-all duration-300 ease-in-out hover:scale-[1.02]"
-                >
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
-                    <div className="relative h-48 w-full overflow-hidden">
-                      <Image
-                        src={product.images[0]}
-                        alt={product.name}
-                        fill
-                        className="object-cover transition-transform duration-500 hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-                    </div>
-                    <div className="p-4 pt-2">
-                      <div className="flex flex-col gap-1">
-                        <h2 className="text-lg font-semibold line-clamp-2 h-[60px] transition-colors duration-200 hover:text-primary-color">
-                          {product.name}
-                        </h2>
-                        <p className="text-gray-600 text-sm underline truncate-1-lines transition-colors duration-200">
-                          {product.price}
-                        </p>
-                        <p className="text-sm text-gray-500 line-clamp-2 mt-2 transition-colors duration-200">
-                          {product.description
-                            .replace(/<[^>]*>/g, '')
-                            .replace(/deskripsi produk/gi, '')                  
-                            .replace(/keterangan produk/gi, '')               
-                          }
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
 
+            {/* Load More Trigger */}
             {visibleProducts < filteredProducts.length && (
               <div 
-                ref={loadMoreRef} 
-                className="w-full h-20 flex items-center justify-center mt-8"
+                ref={loadMoreRef}
+                className="h-20 flex items-center justify-center mt-8"
               >
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-color transition-opacity duration-300"></div>
+                <div className="w-8 h-8 border-4 border-primary-color border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+
+            {/* No Results */}
+            {filteredProducts.length === 0 && (
+              <div className="text-center py-12">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Tidak ada produk ditemukan</h3>
+                <p className="text-gray-600">Coba ubah filter atau kata kunci pencarian Anda</p>
               </div>
             )}
           </div>

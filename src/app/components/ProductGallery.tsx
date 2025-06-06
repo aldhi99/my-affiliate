@@ -45,7 +45,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, alt }) => {
         onMouseMove={handleMouseMove}
       >
         <div 
-          className="relative w-full h-full overflow-hidden flex items-center justify-center min-h-[400px] bg-gray-50"
+          className="relative w-full h-[100px] overflow-hidden flex items-center justify-center min-h-[400px] bg-gray-50"
           style={{
             backgroundImage: isZoomed ? `url(${mainImage})` : 'none',
             backgroundPosition: isZoomed ? `${position.x}% ${position.y}%` : 'center',

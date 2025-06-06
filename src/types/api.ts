@@ -13,12 +13,14 @@ export interface Product {
     category: string;
     subcategory: string;
     description: string;
+    url_tiktok: string;
+    url_shopee: string;
+    url_tokopedia: string;
     image_file: ProductImage[];
 }
 
 export interface ProductImage {
     id: number;
-    product_id: number;
     filename: string;
     created_at: string;
   }
@@ -30,6 +32,9 @@ export interface CreateProductRequest {
     category: string;
     subcategory: string;
     description: string;
+    url_tiktok: string;
+    url_shopee: string;
+    url_tokopedia: string;
     image: string;
 }
 

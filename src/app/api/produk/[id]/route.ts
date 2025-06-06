@@ -62,8 +62,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       if (row.image_id) {
         product.image_file.push({
           id: row.image_id,
-          product_id: row.image_product_id,
-          filename: row.image_filename,
+          filename: process.env.URL_APP + '/' + row.image_filename,
           created_at: row.image_created_at
         });
       }

@@ -19,6 +19,9 @@ export async function GET(request: Request) {
         A.category AS product_category,
         A.subcategory AS product_subcategory,
         A.description AS product_description,
+        A.url_tiktok AS product_url_tiktok,
+        A.url_shopee AS product_url_shopee,
+        A.url_tokopedia AS product_url_tokopedia,
         B.updated_at AS product_updated_at,
         B.id AS image_id,
         B.product_id AS image_product_id,
@@ -52,6 +55,9 @@ export async function GET(request: Request) {
           category: row.product_category,
           subcategory: row.product_subcategory,
           description: row.product_description,
+          url_tiktok: row.product_url_tiktok,
+          url_shopee: row.product_url_shopee,
+          url_tokopedia: row.product_url_tokopedia,
           image_file: [],
         };
       }
@@ -59,8 +65,7 @@ export async function GET(request: Request) {
       if (row.image_id) {
         productsMap[productId].image_file.push({
           id: row.image_id,
-          product_id: row.image_product_id,
-          filename: row.image_filename,
+          filename: process.env.URL_APP + '/' + row.image_filename,
           created_at: row.image_created_at,
         });
       }
