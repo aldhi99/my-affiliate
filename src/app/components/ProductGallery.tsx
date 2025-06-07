@@ -88,7 +88,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, alt }) => {
 
       {/* Thumbnail Gallery */}
       {images.length > 0 && (
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-6 md:grid-cols-8 gap-2">
           {images.map((image, index) => (
             image && (
               <button
@@ -98,7 +98,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, alt }) => {
                   setIsLoading(true);
                   setImageError(null);
                 }}
-                className={`relative aspect-square rounded-lg overflow-hidden border-0 transition-all ${
+                className={`relative aspect-square rounded-lg w-[50px] overflow-hidden border-0 transition-all ${
                   mainImage === image 
                     ? 'border-1 scale-115' 
                     : 'hover:border-secondary-color'

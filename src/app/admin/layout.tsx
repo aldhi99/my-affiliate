@@ -6,9 +6,9 @@ import { usePathname } from 'next/navigation';
 import {
   HomeIcon,
   ShoppingCartIcon,
-  UsersIcon,
-  ChartBarIcon,
-  CogIcon,
+  // UsersIcon,
+  // ChartBarIcon,
+  // CogIcon,
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
@@ -16,9 +16,9 @@ import {
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: HomeIcon },
   { name: 'Products', href: '/admin/products', icon: ShoppingCartIcon },
-  { name: 'Customers', href: '/admin/customers', icon: UsersIcon },
-  { name: 'Analytics', href: '/admin/analytics', icon: ChartBarIcon },
-  { name: 'Settings', href: '/admin/settings', icon: CogIcon },
+  // { name: 'Customers', href: '/admin/customers', icon: UsersIcon },
+  // { name: 'Analytics', href: '/admin/analytics', icon: ChartBarIcon },
+  // { name: 'Settings', href: '/admin/settings', icon: CogIcon },
 ];
 
 export default function AdminLayout({

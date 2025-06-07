@@ -17,6 +17,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     .replace(/deskripsi produk/gi, '')
     .replace(/keterangan produk/gi, '')
     .replace(/&quot;/gi, '"')
+    .replace(/&nbsp;/gi, '--')
     .trim();
 
   return (
