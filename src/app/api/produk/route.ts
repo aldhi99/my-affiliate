@@ -113,6 +113,7 @@ export async function GET(request: Request) {
       console.log('Pagination info:', { totalItems, totalPages, currentPage: page, itemsPerPage: size });
 
       const productsMap: { [key: number]: Product } = {};
+      
       for (const row of rows) {
         const productId = row.product_id;
         if (!productsMap[productId]) {

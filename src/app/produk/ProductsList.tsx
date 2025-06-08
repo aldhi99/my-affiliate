@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { getProducts, Product, categories } from '@/data/products';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -40,34 +40,35 @@ export default function ProductsList() {
     return parseInt(price.replace(/[^0-9]/g, ''));
   };
 
-  const filteredProducts = products.filter(product => {
-    // Search filter
-    const searchLower = searchQuery.toLowerCase();
-    const matchesSearch = searchQuery === '' || 
-      product.name.toLowerCase().includes(searchLower) ||
-      product.description.toLowerCase().includes(searchLower) ||
-      product.category.toLowerCase().includes(searchLower) ||
-      (product.subcategory?.toLowerCase().includes(searchLower) ?? false);
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      const searchLower = searchQuery.toLowerCase();
+      const matchesSearch = searchQuery === '' || 
+        product.name.toLowerCase().includes(searchLower) ||
+        product.description.toLowerCase().includes(searchLower) ||
+        product.category.toLowerCase().includes(searchLower) ||
+        (product.subcategory?.toLowerCase().includes(searchLower) ?? false);
 
-    // Category filter
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    const matchesSubcategory = selectedSubcategory === 'all' || product.subcategory === selectedSubcategory;
+      // Category filter
+      const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+      const matchesSubcategory = selectedSubcategory === 'all' || product.subcategory === selectedSubcategory;
 
-    return matchesSearch && matchesCategory && matchesSubcategory;
-  }).sort((a, b) => {
-    switch (sortBy) {
-      case 'price-asc':
-        return parsePrice(a.price_start) - parsePrice(b.price_start);
-      case 'price-desc':
-        return parsePrice(b.price_start) - parsePrice(a.price_start);
-      case 'name-asc':
-        return a.name.localeCompare(b.name);
-      case 'name-desc':
-        return b.name.localeCompare(a.name);
-      default:
-        return parseInt(b.id) - parseInt(a.id); // Default sort by newest
-    }
-  });
+      return matchesSearch && matchesCategory && matchesSubcategory;
+    }).sort((a, b) => {
+      switch (sortBy) {
+        case 'price-asc':
+          return parsePrice(a.price_start) - parsePrice(b.price_start);
+        case 'price-desc':
+          return parsePrice(b.price_start) - parsePrice(a.price_start);
+        case 'name-asc':
+          return a.name.localeCompare(b.name);
+        case 'name-desc':
+          return b.name.localeCompare(a.name);
+        default:
+          return parseInt(b.id) - parseInt(a.id); // Default sort by newest
+      }
+    });
+  }, [products, searchQuery, selectedCategory, selectedSubcategory, sortBy]);
 
   useEffect(() => {
     const checkMobile = () => {

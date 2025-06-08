@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Product, formatPriceRange } from '@/data/products';
 
 interface ProductCardProps {
@@ -12,13 +12,15 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [imageError, setImageError] = useState(false);
   const mainImage = product.image_file[0]?.filename || null;
 
-  const cleanDescription = product.description
-    .replace(/<[^>]*>/g, '')
-    .replace(/deskripsi produk/gi, '')
-    .replace(/keterangan produk/gi, '')
-    .replace(/&quot;/gi, '"')
-    .replace(/&nbsp;/gi, '--')
-    .trim();
+  const cleanDescription = useMemo(() => {
+    return product.description
+      .replace(/<[^>]*>/g, '')
+      .replace(/deskripsi produk/gi, '')
+      .replace(/keterangan produk/gi, '')
+      .replace(/&quot;/gi, '"')
+      .replace(/&nbsp;/gi, '--')
+      .trim();
+  }, [product.description]);
 
   return (
     <Link 

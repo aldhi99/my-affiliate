@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Marquee from 'react-fast-marquee';
 import { getProducts, Product } from '@/data/products';
 import ProductCard from './ProductCard';
@@ -15,11 +15,7 @@ const NewProductsMarquee = () => {
     const fetchProducts = async () => {
       try {
         const result = await getProducts(1, 6); // Get first page with 6 items
-        // Get the newest products (assuming products are ordered by id, with higher id being newer)
-        const newestProducts = [...result.items]
-          .sort((a, b) => parseInt(b.id) - parseInt(a.id))
-          .slice(0, 6);
-        setProducts(newestProducts);
+        setProducts(result.items);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -30,6 +26,16 @@ const NewProductsMarquee = () => {
 
     fetchProducts();
   }, []);
+
+  const newestProducts = useMemo(() => {
+    return [...products]
+      .sort((a, b) => parseInt(b.id) - parseInt(a.id))
+      .slice(0, 6);
+  }, [products]);
+
+  const marqueeProducts = useMemo(() => {
+    return [...newestProducts, ...newestProducts, ...newestProducts];
+  }, [newestProducts]);
 
   if (loading) {
     return (
@@ -46,9 +52,6 @@ const NewProductsMarquee = () => {
   if (error || products.length === 0) {
     return null;
   }
-
-  // Duplicate the array 3x for seamless effect
-  const marqueeProducts = [...products, ...products, ...products];
 
   return (
     <section className="w-full py-16 relative overflow-hidden">
