@@ -45,9 +45,11 @@ export async function GET(request: Request) {
         B.id AS image_id,
         B.product_id AS image_product_id,
         B.filename AS image_filename,
-        B.created_at AS image_created_at
+        B.created_at AS image_created_at,
+        COALESCE(COUNT(C.id), 0) AS product_visit_count
       FROM products A
       LEFT JOIN product_images B ON A.id = B.product_id
+      LEFT JOIN product_visits C ON A.id = C.product_id
     `;
 
     const queryParams: (string | number)[] = [];
@@ -59,20 +61,37 @@ export async function GET(request: Request) {
     }
 
     if (search) {
-      whereConditions.push('(A.name LIKE ? OR A.description LIKE ? OR A.category LIKE ? OR A.subcategory LIKE ?)');
       const searchPattern = `%${search}%`;
+      whereConditions.push(`(
+        A.name LIKE ? OR 
+        A.description LIKE ? OR 
+        A.category LIKE ? OR 
+        A.subcategory LIKE ?
+      )`);
       queryParams.push(searchPattern, searchPattern, searchPattern, searchPattern);
     }
 
+    // Add WHERE clause if we have any conditions
     if (whereConditions.length > 0) {
-      const whereClause = ' WHERE ' + whereConditions.join(' AND ');
-      query += whereClause;
-      countQuery += whereClause;
+      query += ' WHERE ' + whereConditions.join(' AND ');
     }
 
-    // Add pagination to the main query
+    // Add GROUP BY clause
+    query += `
+      GROUP BY 
+        A.id, A.name, A.price_start, A.price_end, A.created_at, A.slug, 
+        A.category, A.subcategory, A.description, A.url_tiktok, A.url_shopee, 
+        A.url_tokopedia, B.updated_at, B.id, B.product_id, B.filename, B.created_at
+    `;
+
+    // Add ORDER BY and LIMIT
     query += ` ORDER BY A.created_at DESC LIMIT ? OFFSET ?`;
     queryParams.push(size, offset);
+
+    // Update count query to match the main query's WHERE conditions
+    if (whereConditions.length > 0) {
+      countQuery += ' WHERE ' + whereConditions.join(' AND ');
+    }
 
     console.log('Count query:', countQuery);
     console.log('Main query:', query);
@@ -109,6 +128,7 @@ export async function GET(request: Request) {
             url_tiktok: row.product_url_tiktok,
             url_shopee: row.product_url_shopee,
             url_tokopedia: row.product_url_tokopedia,
+            visit_count: row.product_visit_count,
             image_file: [],
           };
         }

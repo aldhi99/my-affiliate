@@ -19,6 +19,7 @@ export default function ProductClient({ params }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const orderSectionRef = useRef<HTMLDivElement>(null);
+  const [visitRecorded, setVisitRecorded] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -30,7 +31,7 @@ export default function ProductClient({ params }: Props) {
           return;
         }
 
-        const result = await getProducts(1, 100); // Get more products to ensure we find the one we need
+        const result = await getProducts(1, 100);
         const foundProduct = result.items.find((p) => p.slug === productSlug);
         
         if (!foundProduct) {
@@ -41,6 +42,24 @@ export default function ProductClient({ params }: Props) {
 
         setProduct(foundProduct);
         setLoading(false);
+
+        // Record visit if not already recorded
+        if (!visitRecorded && foundProduct.id) {
+          try {
+            const response = await fetch(`/api/produk/${foundProduct.id}/visit`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            
+            if (response.ok) {
+              setVisitRecorded(true);
+            }
+          } catch (error) {
+            console.error('Failed to record visit:', error);
+          }
+        }
       } catch (error) {
         console.error('Error fetching product:', error);
         setError('Failed to load product');
@@ -49,7 +68,7 @@ export default function ProductClient({ params }: Props) {
     };
 
     fetchProduct();
-  }, [params?.slug, routeParams?.slug]);
+  }, [params?.slug, routeParams?.slug, visitRecorded]);
 
   if (loading) {
     return (

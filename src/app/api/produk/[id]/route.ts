@@ -63,6 +63,7 @@ export async function GET(request: Request, { params }: RouteParams) {
       url_tiktok: rows[0].product_url_tiktok || '',
       url_shopee: rows[0].product_url_shopee || '',
       url_tokopedia: rows[0].product_url_tokopedia || '',
+      visit_count: 0,
       image_file: []
     };
 

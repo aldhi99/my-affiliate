@@ -24,6 +24,7 @@ interface Product {
   url_shopee: string;
   url_tokopedia: string;
   image_file: ImageFile[];
+  visit_count: number;
 }
 
 interface PaginationInfo {
@@ -59,22 +60,60 @@ export default function ProductsPage() {
         size: pagination.items_per_page.toString(),
         ...(search && { search }),
       });
-      console.log('Fetching products with params:', queryParams.toString());
-      const response = await fetch(`http://localhost:3000/api/produk?${queryParams}`);
-      const result = await response.json();
+
+      // Use relative URL instead of hardcoded localhost
+      const apiUrl = `http://localhost:3000/api/produk?${queryParams}`;
+      console.log('Fetching products from:', apiUrl);
       
-      console.log('API Response:', JSON.stringify(result.data.items.slice(0, 2), null, 2));
+      let response;
+      try {
+        response = await fetch(apiUrl);
+        console.log('Response status:', response.status);
+      } catch (fetchError) {
+        console.error('Network error:', fetchError);
+        throw new Error(`Network error: ${fetchError instanceof Error ? fetchError.message : 'Failed to connect to server'}`);
+      }
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Server error response:', {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorText
+        });
+        throw new Error(`Server error: ${response.status} ${response.statusText}`);
+      }
+
+      let result;
+      try {
+        result = await response.json();
+        console.log('API Response data:', result);
+      } catch (parseError) {
+        console.error('JSON parse error:', parseError);
+        throw new Error('Invalid JSON response from server');
+      }
       
       if (!result.status) {
+        console.error('API error response:', result);
         throw new Error(result.message || 'Failed to fetch products');
+      }
+
+      if (!result.data || !Array.isArray(result.data.items)) {
+        console.error('Invalid response format:', result);
+        throw new Error('Invalid response format from server');
+      }
+      
+      // Only log if we have items
+      if (result.data.items.length > 0) {
+        console.log('First two items:', JSON.stringify(result.data.items.slice(0, 2), null, 2));
       }
       
       setProducts(result.data.items);
       setPagination({
-        current_page: result.data.current_page,
-        total_pages: result.data.total_pages,
-        total_items: result.data.total_items,
-        items_per_page: result.data.items_per_page,
+        current_page: result.data.current_page || 1,
+        total_pages: result.data.total_pages || 1,
+        total_items: result.data.total_items || 0,
+        items_per_page: result.data.items_per_page || pagination.items_per_page,
       });
 
       // Update URL with search params
@@ -84,8 +123,29 @@ export default function ProductsPage() {
       const newUrl = newSearchParams.toString() ? `?${newSearchParams.toString()}` : '';
       router.replace(newUrl, { scroll: false });
     } catch (error) {
-      console.error('Error fetching products:', error);
-      setError(error instanceof Error ? error.message : 'Failed to load products. Please try again.');
+      // Improved error logging
+      const errorInfo = {
+        name: error instanceof Error ? error.name : 'Unknown Error',
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+        cause: error instanceof Error ? error.cause : undefined
+      };
+      console.error('Error in fetchProducts:', errorInfo);
+      
+      // Set a user-friendly error message
+      const userMessage = error instanceof Error 
+        ? error.message 
+        : 'Failed to load products. Please try again.';
+      setError(userMessage);
+      
+      // Reset products and pagination on error
+      setProducts([]);
+      setPagination(prev => ({
+        ...prev,
+        current_page: 1,
+        total_pages: 1,
+        total_items: 0
+      }));
     } finally {
       setIsLoading(false);
     }
@@ -97,9 +157,13 @@ export default function ProductsPage() {
     fetchProducts(page, search);
   }, [searchParams]);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     fetchProducts(1, searchQuery);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
   const handlePageChange = (page: number) => {
@@ -202,20 +266,20 @@ export default function ProductsPage() {
       </div>
 
       <div className="mb-6">
-        <form onSubmit={handleSearch} className="max-w-lg">
-          <div className="relative">
+        <div className="max-w-lg">
+          <form onSubmit={handleSearchSubmit} className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
             </div>
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search products..."
+              onChange={handleSearchChange}
+              placeholder="Search products... (Press Enter to search)"
               className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
 
       <div className="bg-white shadow overflow-hidden sm:rounded-md">
@@ -235,6 +299,9 @@ export default function ProductsPage() {
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Subcategory
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Visits
                   </th>
                   <th scope="col" className="relative px-6 py-3">
                     <span className="sr-only">Actions</span>
@@ -259,6 +326,13 @@ export default function ProductsPage() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">{product.subcategory}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            {product.visit_count || 0} visits
+                          </span>
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <Link
