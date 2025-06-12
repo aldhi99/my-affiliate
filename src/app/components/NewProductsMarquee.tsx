@@ -14,8 +14,11 @@ const NewProductsMarquee = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const result = await getProducts(1, 6); // Get first page with 6 items
-        setProducts(result.items);
+        const result = await getProducts(6); 
+        
+        console.log(result.data.data);
+        // Get first page with 6 items
+        setProducts(result.data.data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -28,12 +31,14 @@ const NewProductsMarquee = () => {
   }, []);
 
   const newestProducts = useMemo(() => {
+    if (!Array.isArray(products)) return [];
     return [...products]
       .sort((a, b) => parseInt(b.id) - parseInt(a.id))
       .slice(0, 6);
   }, [products]);
 
   const marqueeProducts = useMemo(() => {
+    if (!Array.isArray(newestProducts)) return [];
     return [...newestProducts, ...newestProducts, ...newestProducts];
   }, [newestProducts]);
 
@@ -49,7 +54,7 @@ const NewProductsMarquee = () => {
     );
   }
 
-  if (error || products.length === 0) {
+  if (error || !Array.isArray(products) || products.length === 0) {
     return null;
   }
 

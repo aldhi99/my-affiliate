@@ -12,7 +12,7 @@ interface RouteParams {
 
 interface VisitStatistics extends RowDataPacket {
   platform: string;
-  visit_count: number;
+  visits_count: number;
   unique_visitors: number;
 }
 
@@ -114,7 +114,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const query = `
       SELECT 
         platform,
-        COUNT(*) as visit_count,
+        COUNT(*) as visits_count,
         COUNT(DISTINCT ip_address) as unique_visitors
       FROM product_visits
       WHERE product_id = ?

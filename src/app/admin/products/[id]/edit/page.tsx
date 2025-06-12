@@ -17,27 +17,8 @@ import {
   ArrowUturnRightIcon,
 } from '@heroicons/react/24/outline';
 import { use } from 'react';
-
-interface ImageFile {
-  id: string;
-  filename: string;
-  created_at: string;
-}
-
-interface Product {
-  id: string;
-  slug: string;
-  name: string;
-  price_start: string;
-  price_end: string;
-  category: string;
-  subcategory: string;
-  description: string;
-  url_tiktok: string;
-  url_shopee: string;
-  url_tokopedia: string;
-  image_file: ImageFile[];
-}
+import ProductImageUpload from '@/app/components/ProductImageUpload';
+import { Product } from '@/data/products';
 
 interface FormErrors {
   name?: string;
@@ -206,7 +187,11 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         setIsLoading(true);
         setError(null);
         console.log('Fetching product with ID:', productId);
-        const response = await fetch(`http://localhost:3000/api/produk/${productId}`);
+        const apiUrl = process.env.NEXT_PUBLIC_URL_API + `/product/${productId}`;
+        console.log(apiUrl);
+        
+
+        const response = await fetch(apiUrl);
         const result = await response.json();
         
         console.log('API Response:', JSON.stringify(result, null, 2));
@@ -255,9 +240,9 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
     }
 
     // Price validation
-    if (data.price_start && data.price_end && data.price_start > data.price_end) {
-      errors.price_end = 'End price must be greater than start price';
-    }
+    // if (data.price_start && data.price_end && data.price_start > data.price_end) {
+    //   errors.price_end = 'End price must be greater than start price';
+    // }
 
     // URL fields are optional, but if provided should be valid URLs
     if (data.url_tiktok && data.url_tiktok.trim() && !isValidUrl(data.url_tiktok)) {
@@ -302,15 +287,16 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const errors = validateForm(formData);
     
+    // Validate form data
+    const errors = validateForm(formData);
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       return;
     }
 
-    try {
-      setIsLoading(true);
+    try {      
+      setIsSubmitting(true);
       setError(null);
 
       // Prepare data for submission
@@ -329,7 +315,8 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
 
       console.log('Submitting product data:', JSON.stringify(submitData, null, 2));
       
-      const response = await fetch(`http://localhost:3000/api/produk/${productId}`, {
+      const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/edit/${productId}`
+      const response = await fetch(urlApi, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -337,38 +324,15 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         body: JSON.stringify(submitData),
       });
 
-      console.log('Response status:', response.status);
-      const responseText = await response.text();
-      console.log('Raw response:', responseText);
-
-      let result;
-      try {
-        result = JSON.parse(responseText);
-      } catch (parseError) {
-        console.error('Error parsing JSON:', parseError);
-        throw new Error('Invalid response from server');
-      }
-
-      console.log('Parsed response:', result);
-
+      const result = await response.json();
+      
       if (!result.status) {
         throw new Error(result.message || 'Failed to update product');
       }
 
-      // Redirect to products list with search params
-      const searchParams = new URLSearchParams(window.location.search);
-      const search = searchParams.get('search');
-      const page = searchParams.get('page');
+      // On success, reload the current page to show updated data
+      window.location.reload();
       
-      let redirectUrl = '/admin/products';
-      if (search || page) {
-        const params = new URLSearchParams();
-        if (search) params.set('search', search);
-        if (page) params.set('page', page);
-        redirectUrl += `?${params.toString()}`;
-      }
-      
-      router.push(redirectUrl);
     } catch (error) {
       console.error('Error updating product:', error);
       setError(error instanceof Error ? error.message : 'Failed to update product. Please try again.');
@@ -405,7 +369,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
           </div>
           <div className="mt-4">
             <button
-              onClick={() => router.back()}
+              onClick={() => window.location.reload()}
               className="inline-flex items-center text-sm font-medium text-red-600 hover:text-red-500"
             >
               <ArrowLeftIcon className="h-5 w-5 mr-2" />
@@ -633,6 +597,20 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                   )}
                 </div>
               </div>
+            </div>
+
+            {/* Add Image Upload Section */}
+            <div className="bg-gray-50 rounded-lg p-6">
+              <ProductImageUpload
+                productId={formData.id!}
+                existingImages={formData.images}
+                onImagesUpdated={(images) => {
+                  setFormData(prev => ({
+                    ...prev,
+                    image_file: images
+                  }));
+                }}
+              />
             </div>
           </div>
 

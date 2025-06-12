@@ -16,7 +16,7 @@ export interface Product {
     url_tiktok: string;
     url_shopee: string;
     url_tokopedia: string;
-    visit_count: number | null;
+    visits_count: number | null;
     image_file: ProductImage[];
 }
 

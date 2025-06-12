@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-uploads": "ts-node src/scripts/ensure-upload-dirs.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",

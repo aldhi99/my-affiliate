@@ -46,7 +46,7 @@ export async function GET(request: Request) {
         B.product_id AS image_product_id,
         B.filename AS image_filename,
         B.created_at AS image_created_at,
-        COALESCE(COUNT(C.id), 0) AS product_visit_count
+        COALESCE(COUNT(C.id), 0) AS product_visits_count
       FROM products A
       LEFT JOIN product_images B ON A.id = B.product_id
       LEFT JOIN product_visits C ON A.id = C.product_id
@@ -129,7 +129,7 @@ export async function GET(request: Request) {
             url_tiktok: row.product_url_tiktok,
             url_shopee: row.product_url_shopee,
             url_tokopedia: row.product_url_tokopedia,
-            visit_count: row.product_visit_count,
+            visits_count: row.product_visits_count,
             image_file: [],
           };
         }

@@ -1,9 +1,12 @@
 import { Metadata } from 'next';
-import { getProducts, Product } from '@/data/products';
-import ProductClient from './ProductClient';
+import { getProductsBySlug } from '@/data/products';
 import { headers } from 'next/headers';
 import { v4 as uuidv4 } from 'uuid';
 import conn from '@/lib/connection';
+import Link from 'next/link';
+import Header from '../../components/Header';
+import Footer from '@/app/components/Footer';
+import ProductView from './ProductView';
 
 interface PageProps {
   params: { slug: string };
@@ -64,15 +67,7 @@ export async function generateMetadata(
   { params }: PageProps
 ): Promise<Metadata> {
   try {
-    const { items: products } = await getProducts();
-    const product = products.find((p: Product) => p.slug === params.slug);
-
-    if (!product) {
-      return {
-        title: 'Produk Tidak Ditemukan',
-        description: 'Maaf, produk yang Anda cari tidak ditemukan.'
-      };
-    }
+    const product = await getProductsBySlug(params.slug);
 
     // Clean HTML tags from description
     const cleanDescription = product.description
@@ -82,8 +77,8 @@ export async function generateMetadata(
       .trim();
 
     // Get first image as og image
-    const firstImage = product.image_file[0]?.filename 
-      ? `${product.image_file[0].filename}`
+    const firstImage = product.images[0]?.filename 
+      ? `${product.images[0].filename}`
       : '/logo.png';
 
     return {
@@ -122,14 +117,8 @@ export async function generateMetadata(
 
 export default async function Page({ params }: PageProps) {
   try {
-    // Get product data
-    const { items: products } = await getProducts();
-    const product = products.find((p: Product) => p.slug === params.slug);
-
-    if (!product) {
-      return <ProductClient params={params} />;
-    }
-
+    const product = await getProductsBySlug(params.slug);
+    
     // Get request headers for visit tracking
     const headersList = await headers();
     const userAgent = headersList.get('user-agent') || 'unknown';
@@ -139,9 +128,34 @@ export default async function Page({ params }: PageProps) {
     // Record visit asynchronously
     recordVisit(product.id, userAgent, ipAddress);
 
-    return <ProductClient params={params} />;
+    return <ProductView product={product} />;
+    
   } catch (error) {
     console.error('Error in product page:', error);
-    return <ProductClient params={params} />;
+    return <ProductNotFound />;
   }
 } 
+
+// Komponen terpisah untuk tampilan "Produk Tidak Ditemukan"
+function ProductNotFound() {
+  return (
+    <div className="min-h-screen flex flex-col bg-white">
+      <Header />
+      <main className="flex-grow container mx-auto py-16 px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          <h1 className="text-3xl font-bold text-foreground mb-4">Produk Tidak Ditemukan</h1>
+          <p className="text-lg text-secondary-color mb-8">
+            Maaf, produk yang Anda cari tidak ditemukan.
+          </p>
+          <Link 
+            href="/produk" 
+            className="inline-block bg-primary-color text-white px-6 py-3 rounded-lg hover:bg-primary-color/90 transition-colors"
+          >
+            Kembali ke Daftar Produk
+          </Link>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}

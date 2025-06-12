@@ -33,7 +33,7 @@ interface Product {
   url_tiktok?: string;
   url_shopee?: string;
   url_tokopedia?: string;
-  visit_count?: number;
+  visits_count?: number;
   image_file: {
     id: string;
     product_id: string;
@@ -141,9 +141,9 @@ export default function AdminDashboard() {
         const products = productsResponse.items;
         const visitStats = visitStatsResponse.data;
         
-        const totalVisits = products.reduce((sum, product) => sum + (product.visit_count || 0), 0);
+        const totalVisits = products.reduce((sum, product) => sum + (product.visits_count || 0), 0);
         const mostVisited = [...products]
-          .sort((a, b) => (b.visit_count || 0) - (a.visit_count || 0))
+          .sort((a, b) => (b.visits_count || 0) - (a.visits_count || 0))
           .slice(0, 5);
 
         setStats({
@@ -334,7 +334,7 @@ export default function AdminDashboard() {
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         <div className="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-800">
-                          {product.visit_count?.toLocaleString() || 0} visits
+                          {product.visits_count?.toLocaleString() || 0} visits
                         </div>
                       </td>
                     </tr>

@@ -24,8 +24,9 @@ export default function ProductsList() {
     const fetchProducts = async () => {
       try {
         // Fetch all products without pagination
-        const result = await getProducts(1, 1000); // Get a large number to fetch all products
-        setProducts(result.items);
+        const result = await getProducts(1000); 
+        // Get a large number to fetch all products
+        setProducts(result.data.data);
         setLoading(false);
       } catch (error) {
         setError(error instanceof Error ? error.message : 'Failed to load products');

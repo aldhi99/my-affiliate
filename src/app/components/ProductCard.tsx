@@ -10,8 +10,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const mainImage = product.image_file[0]?.filename || null;
-
+  const mainImage = product.images[0]?.filename || null;
   const cleanDescription = useMemo(() => {
     return product.description
       .replace(/<[^>]*>/g, '')
@@ -41,7 +40,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         ) : (
           <Image
-            src={mainImage}
+            src={process.env.NEXT_PUBLIC_URL_IMAGE + '/' + mainImage}
             alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

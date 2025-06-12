@@ -4,34 +4,26 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeftIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { Product } from '@/data/products';
 
-interface ImageFile {
-  id: string;
-  filename: string;
-  created_at: string;
-}
-
-interface Product {
-  id: string;
-  slug: string;
-  name: string;
-  price_start: string;
-  price_end: string;
-  category: string;
-  subcategory: string;
-  description: string;
-  url_tiktok: string;
-  url_shopee: string;
-  url_tokopedia: string;
-  image_file: ImageFile[];
-  visit_count: number;
+interface PaginationLink {
+  url: string | null;
+  label: string;
+  active: boolean;
 }
 
 interface PaginationInfo {
   current_page: number;
-  total_pages: number;
-  total_items: number;
-  items_per_page: number;
+  last_page: number;
+  total: number;
+  per_page: number;
+  from: number;
+  to: number;
+  links: PaginationLink[];
+  first_page_url: string;
+  last_page_url: string;
+  next_page_url: string | null;
+  prev_page_url: string | null;
 }
 
 export default function ProductsPage() {
@@ -40,29 +32,38 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('s') || '');
   const [pagination, setPagination] = useState<PaginationInfo>({
     current_page: Number(searchParams.get('page')) || 1,
-    total_pages: 1,
-    total_items: 0,
-    items_per_page: 10,
+    last_page: 1,
+    total: 0,
+    per_page: 10,
+    from: 0,
+    to: 0,
+    links: [],
+    first_page_url: '',
+    last_page_url: '',
+    next_page_url: null,
+    prev_page_url: null
   });
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const fetchProducts = async (page: number = 1, search: string = '') => {
+  const fetchProducts = async (page: number = 1, s: string = '') => {
     try {
       setIsLoading(true);
       setError(null);
       const queryParams = new URLSearchParams({
         page: page.toString(),
-        size: pagination.items_per_page.toString(),
-        ...(search && { search }),
+        size: pagination.per_page.toString(),
+        order: "created_at",
+        by: "desc",
+        ...(s && { s }),
       });
 
       // Use relative URL instead of hardcoded localhost
-      const apiUrl = `http://localhost:3000/api/produk?${queryParams}`;
+      const apiUrl = process.env.NEXT_PUBLIC_URL_API + `/product/search?${queryParams}`;
       console.log('Fetching products from:', apiUrl);
       
       let response;
@@ -98,27 +99,34 @@ export default function ProductsPage() {
         throw new Error(result.message || 'Failed to fetch products');
       }
 
-      if (!result.data || !Array.isArray(result.data.items)) {
+      if (!result.data || !Array.isArray(result.data.data)) {
         console.error('Invalid response format:', result);
         throw new Error('Invalid response format from server');
       }
       
       // Only log if we have items
-      if (result.data.items.length > 0) {
-        console.log('First two items:', JSON.stringify(result.data.items.slice(0, 2), null, 2));
+      if (result.data.data.length > 0) {
+        console.log('First two items:', JSON.stringify(result.data.data.slice(0, 2), null, 2));
       }
       
-      setProducts(result.data.items);
+      setProducts(result.data.data);
       setPagination({
-        current_page: result.data.current_page || 1,
-        total_pages: result.data.total_pages || 1,
-        total_items: result.data.total_items || 0,
-        items_per_page: result.data.items_per_page || pagination.items_per_page,
+        current_page: result.data.current_page,
+        last_page: result.data.last_page,
+        total: result.data.total,
+        per_page: result.data.per_page,
+        from: result.data.from,
+        to: result.data.to,
+        links: result.data.links,
+        first_page_url: result.data.first_page_url,
+        last_page_url: result.data.last_page_url,
+        next_page_url: result.data.next_page_url,
+        prev_page_url: result.data.prev_page_url
       });
 
       // Update URL with search params
       const newSearchParams = new URLSearchParams();
-      if (search) newSearchParams.set('search', search);
+      if (s) newSearchParams.set('search', s);
       if (page > 1) newSearchParams.set('page', page.toString());
       const newUrl = newSearchParams.toString() ? `?${newSearchParams.toString()}` : '';
       router.replace(newUrl, { scroll: false });
@@ -143,8 +151,8 @@ export default function ProductsPage() {
       setPagination(prev => ({
         ...prev,
         current_page: 1,
-        total_pages: 1,
-        total_items: 0
+        last_page: 1,
+        total: 0
       }));
     } finally {
       setIsLoading(false);
@@ -310,7 +318,7 @@ export default function ProductsPage() {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {products.map((product) => {
-                  console.log('Rendering product:', JSON.stringify(product, null, 2));
+                  // console.log('Rendering product:', JSON.stringify(product, null, 2));
                   return (
                     <tr key={product.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -330,7 +338,7 @@ export default function ProductsPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            {product.visit_count || 0} visits
+                            {product.visits_count || 0} visits
                           </span>
                         </div>
                       </td>
@@ -362,14 +370,14 @@ export default function ProductsPage() {
         <div className="flex-1 flex justify-between sm:hidden">
           <button
             onClick={() => handlePageChange(pagination.current_page - 1)}
-            disabled={pagination.current_page === 1}
+            disabled={!pagination.prev_page_url}
             className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
           <button
             onClick={() => handlePageChange(pagination.current_page + 1)}
-            disabled={pagination.current_page === pagination.total_pages}
+            disabled={!pagination.next_page_url}
             className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next
@@ -379,48 +387,59 @@ export default function ProductsPage() {
           <div>
             <p className="text-sm text-gray-700">
               Showing{' '}
-              <span className="font-medium">
-                {(pagination.current_page - 1) * pagination.items_per_page + 1}
-              </span>{' '}
+              <span className="font-medium">{pagination.from}</span>{' '}
               to{' '}
-              <span className="font-medium">
-                {Math.min(pagination.current_page * pagination.items_per_page, pagination.total_items)}
-              </span>{' '}
+              <span className="font-medium">{pagination.to}</span>{' '}
               of{' '}
-              <span className="font-medium">{pagination.total_items}</span> results
+              <span className="font-medium">{pagination.total}</span> results
             </p>
           </div>
           <div>
             <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-              <button
-                onClick={() => handlePageChange(pagination.current_page - 1)}
-                disabled={pagination.current_page === 1}
-                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <span className="sr-only">Previous</span>
-                <ArrowLeftIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-              {Array.from({ length: pagination.total_pages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
-                    page === pagination.current_page
-                      ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
-                      : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
-              <button
-                onClick={() => handlePageChange(pagination.current_page + 1)}
-                disabled={pagination.current_page === pagination.total_pages}
-                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <span className="sr-only">Next</span>
-                <ArrowLeftIcon className="h-5 w-5 transform rotate-180" aria-hidden="true" />
-              </button>
+              {pagination.links.map((link, index) => {
+                // Skip rendering if url is null
+                if (!link.url) return null;
+
+                // Extract page number from URL
+                const pageMatch = link.url.match(/page=(\d+)/);
+                const pageNumber = pageMatch ? parseInt(pageMatch[1]) : null;
+
+                // Skip if we can't determine the page number
+                if (!pageNumber) return null;
+
+                // Special handling for Previous/Next buttons
+                if (link.label.includes('Previous') || link.label.includes('Next')) {
+                  const isPrevious = link.label.includes('Previous');
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => handlePageChange(pageNumber)}
+                      disabled={link.active}
+                      className={`relative inline-flex items-center px-2 py-2 rounded-${
+                        isPrevious ? 'l' : 'r'
+                      }-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed`}
+                    >
+                      <span className="sr-only">{link.label}</span>
+                      <ArrowLeftIcon className={`h-5 w-5 ${!isPrevious ? 'transform rotate-180' : ''}`} aria-hidden="true" />
+                    </button>
+                  );
+                }
+
+                // Regular page numbers
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handlePageChange(pageNumber)}
+                    className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                      link.active
+                        ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
+                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                );
+              })}
             </nav>
           </div>
         </div>

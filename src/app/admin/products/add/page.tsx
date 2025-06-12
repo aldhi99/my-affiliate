@@ -16,6 +16,7 @@ import {
   ArrowUturnLeftIcon,
   ArrowUturnRightIcon,
 } from '@heroicons/react/24/outline';
+import ProductImageUpload from '@/app/components/ProductImageUpload';
 
 interface ImageFile {
   id: string;
@@ -203,6 +204,7 @@ export default function AddProductPage() {
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [productId, setProductId] = useState<string | null>(null);
 
   const validateForm = (data: Partial<Product>): FormErrors => {
     const errors: FormErrors = {};
@@ -320,6 +322,9 @@ export default function AddProductPage() {
       if (!result.status) {
         throw new Error(result.message || 'Failed to create product');
       }
+
+      // Set the product ID for image upload
+      setProductId(result.data.id);
 
       // Redirect to products list
       router.push('/admin/products');
@@ -548,6 +553,21 @@ export default function AddProductPage() {
                 </div>
               </div>
             </div>
+
+            {/* Add Image Upload Section */}
+            {productId && (
+              <div className="bg-gray-50 rounded-lg p-6">
+                <ProductImageUpload
+                  productId={productId}
+                  onImagesUpdated={(images) => {
+                    setFormData(prev => ({
+                      ...prev,
+                      image_file: images
+                    }));
+                  }}
+                />
+              </div>
+            )}
           </div>
 
           <div className="mt-8 flex justify-end space-x-4 pt-6 border-t border-gray-200">
