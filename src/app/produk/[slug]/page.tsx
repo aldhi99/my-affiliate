@@ -36,23 +36,14 @@ async function recordVisit(productId: string, userAgent: string, ipAddress: stri
     };
 
     const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/visit`;
-    console.log(submitData);
-    console.log(urlApi);
-    
-    const response = await fetch(urlApi, {
+    await fetch(urlApi, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(submitData),
     });
-    const result = await response.json();
 
-    console.log("responseeee", response);
-    
-
-    console.log("sukses visit", result);
-    
   } catch (error) {
     console.error('Error recording visit:', error);
     // Don't throw error to prevent breaking the page load
