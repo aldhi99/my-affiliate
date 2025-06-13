@@ -46,6 +46,21 @@ export const categories = [
   'Otomotif'
 ] as const;
 
+export interface DashboardStats {
+  totalProducts: number;
+  totalVisits: number;
+  averageVisitsPerProduct: number;
+  mostVisitedProducts: Product[];
+  weeklyVisits: VisitData[];
+  dailyVisits: VisitData[];
+}
+
+export interface VisitData {
+  date: string;
+  visits: number;
+}
+
+
 export async function getProducts(size: number): Promise<ProductsResponse> {
   try {
     const url = process.env.NEXT_PUBLIC_URL_API + `/product/paginate/${size}`;

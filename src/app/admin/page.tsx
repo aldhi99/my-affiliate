@@ -7,6 +7,7 @@ import {
   ArrowTrendingUpIcon,
   ArrowTrendingDownIcon,
 } from '@heroicons/react/24/outline';
+import type { ComponentType, SVGProps } from 'react';
 import { useEffect, useState } from 'react';
 import { getProducts } from '@/data/products';
 import {
@@ -20,40 +21,9 @@ import {
   BarChart,
   Bar,
 } from 'recharts';
-
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  price_start: string;
-  price_end: string;
-  category: string;
-  subcategory?: string;
-  description: string;
-  url_tiktok?: string;
-  url_shopee?: string;
-  url_tokopedia?: string;
-  visits_count?: number;
-  image_file: {
-    id: string;
-    product_id: string;
-    filename: string;
-    created_at: string;
-  }[];
-}
-
-interface VisitData {
-  date: string;
-  visits: number;
-}
-
-interface DashboardStats {
-  totalProducts: number;
-  totalVisits: number;
-  averageVisitsPerProduct: number;
-  mostVisitedProducts: Product[];
-  weeklyVisits: VisitData[];
-  dailyVisits: VisitData[];
+interface VisitStatsResponse {
+  dailyVisits: Record<string, number>;
+  weeklyVisits: Record<string, number>;
 }
 
 const StatCard = ({ 
@@ -66,7 +36,7 @@ const StatCard = ({
 }: { 
   title: string; 
   value: string; 
-  icon: any; 
+  icon: ComponentType<SVGProps<SVGSVGElement>>; 
   trend?: string; 
   trendValue?: string; 
   trendType?: 'up' | 'down' | 'neutral' 
@@ -129,18 +99,30 @@ export default function AdminDashboard() {
     async function fetchStats() {
       try {
         // Fetch products and visit statistics in parallel
+        const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/visit-counts`;
         const [productsResponse, visitStatsResponse] = await Promise.all([
-          getProducts(1, 100),
-          fetch('/api/admin/stats').then(res => res.json())
+          getProducts(10000),
+          fetch(urlApi).then(res => res.json())
         ]);
 
-        if (!productsResponse.items || !visitStatsResponse.status) {
+        console.log("productsResponse", productsResponse.data);
+        console.log("visitStatsResponse", visitStatsResponse.data);
+        
+
+        if (!productsResponse.data || !visitStatsResponse.status) {
           throw new Error('Failed to fetch dashboard data');
         }
 
-        const products = productsResponse.items;
-        const visitStats = visitStatsResponse.data;
+        const products = productsResponse.data.data;
+        const visitStats: VisitStatsResponse = visitStatsResponse.data;
         
+        // Transform visit stats from object to array format
+        const transformVisitData = (data: Record<string, number>): VisitData[] => {
+          return Object.entries(data)
+            .map(([date, visits]) => ({ date, visits }))
+            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        };
+
         const totalVisits = products.reduce((sum, product) => sum + (product.visits_count || 0), 0);
         const mostVisited = [...products]
           .sort((a, b) => (b.visits_count || 0) - (a.visits_count || 0))
@@ -151,8 +133,8 @@ export default function AdminDashboard() {
           totalVisits,
           averageVisitsPerProduct: products.length ? Math.round(totalVisits / products.length) : 0,
           mostVisitedProducts: mostVisited,
-          weeklyVisits: visitStats.weeklyVisits,
-          dailyVisits: visitStats.dailyVisits
+          weeklyVisits: transformVisitData(visitStats.weeklyVisits),
+          dailyVisits: transformVisitData(visitStats.dailyVisits)
         });
       } catch (error) {
         console.error('Error fetching dashboard stats:', error);
@@ -264,7 +246,7 @@ export default function AdminDashboard() {
               </div>
             </ChartCard>
 
-            <ChartCard title="Daily Visits (Current Month)">
+            <ChartCard title="Daily Visits (Last 14 days)">
               <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
