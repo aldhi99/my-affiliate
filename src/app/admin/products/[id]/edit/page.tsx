@@ -316,7 +316,6 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
       };
 
       console.log('Submitting product data:', JSON.stringify(submitData, null, 2));  
-      const urlProduct = `/product/edit/${productId}`;
       
       const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/edit/${productId}`;
       const response = await fetch(urlApi, {
@@ -337,8 +336,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
       toast.success('Product updated successfully!');
 
       // On success, reload the current page to show updated data
-      window.location.reload();
-      
+      // window.location.reload();
     } catch (error) {
       console.error('Error updating product:', error);
       const errorMessage = error instanceof Error ? error.message : 'Failed to update product. Please try again.';

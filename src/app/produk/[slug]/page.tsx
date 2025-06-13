@@ -25,38 +25,34 @@ function detectPlatform(userAgent: string): string {
 // Helper function to record visit
 async function recordVisit(productId: string, userAgent: string, ipAddress: string) {
   try {
-    // Check if there's already a visit from this IP for this product today
-    const checkQuery = `
-      SELECT id FROM product_visits 
-      WHERE product_id = ? 
-      AND ip_address = ? 
-      AND DATE(created_at) = CURDATE()
-      LIMIT 1
-    `;
     
-    const [existingVisits] = await conn.query(checkQuery, [productId, ipAddress]);
-    
-    // If a visit already exists for today, don't record a new one
-    if (Array.isArray(existingVisits) && existingVisits.length > 0) {
-      console.log('Visit already recorded for today');
-      return;
-    }
-
     const platform = detectPlatform(userAgent);
-    const visitId = uuidv4();
 
-    const insertQuery = `
-      INSERT INTO product_visits (
-        id,
-        product_id,
-        platform,
-        user_agent,
-        ip_address
-      ) VALUES (?, ?, ?, ?, ?)
-    `;
+    const submitData = {
+      product_id: productId,
+      user_agent: userAgent,
+      ip_address: ipAddress,
+      platform: platform
+    };
 
-    const values = [visitId, productId, platform, userAgent, ipAddress];
-    await conn.query(insertQuery, values);
+    const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/visit`;
+    console.log(submitData);
+    console.log(urlApi);
+    
+    const response = await fetch(urlApi, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(submitData),
+    });
+    const result = await response.json();
+
+    console.log("responseeee", response);
+    
+
+    console.log("sukses visit", result);
+    
   } catch (error) {
     console.error('Error recording visit:', error);
     // Don't throw error to prevent breaking the page load
