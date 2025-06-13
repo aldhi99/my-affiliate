@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeftIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Product } from '@/data/products';
+import toast from 'react-hot-toast';
 
 interface PaginationLink {
   url: string | null;
@@ -101,7 +102,7 @@ export default function ProductsPage() {
 
       if (!result.data || !Array.isArray(result.data.data)) {
         console.error('Invalid response format:', result);
-        throw new Error('Invalid response format from server');
+        throw new Error('Data not found.');
       }
       
       // Only log if we have items
@@ -188,35 +189,28 @@ export default function ProductsPage() {
 
     try {
       setIsDeleting(true);
-      const response = await fetch(`/api/produk/${productToDelete.id}`, {
+      const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/delete/${productToDelete.id}`;
+      const response = await fetch(urlApi, {
         method: 'DELETE',
       });
 
-      console.log('Delete response status:', response.status);
-      const responseText = await response.text();
-      console.log('Delete raw response:', responseText);
-
-      let result;
-      try {
-        result = JSON.parse(responseText);
-      } catch (parseError) {
-        console.error('Error parsing delete response:', parseError);
-        throw new Error('Invalid response from server');
-      }
-
-      console.log('Delete parsed response:', result);
+      const result = await response.json();
 
       if (!result.status) {
         throw new Error(result.message || 'Failed to delete product');
       }
 
-      // Refresh the products list
-      fetchProducts(pagination.current_page, searchQuery);
+      // Show success toast
+      toast.success('Product deleted successfully!');
+
+      // Close modal and refresh products list
       setIsDeleteModalOpen(false);
       setProductToDelete(null);
+      fetchProducts();
     } catch (error) {
       console.error('Error deleting product:', error);
-      setError(error instanceof Error ? error.message : 'Failed to delete product. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete product';
+      toast.error(errorMessage);
     } finally {
       setIsDeleting(false);
     }

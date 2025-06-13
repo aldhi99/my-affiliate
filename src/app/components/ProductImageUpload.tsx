@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import toast from 'react-hot-toast';
 
 interface ProductImage {
   id: string;
@@ -46,11 +47,8 @@ export default function ProductImageUpload({ productId, existingImages = [], onI
   
       const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product-image/upload`;
       const headers: Record<string, string> = {
-        // 'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       };
-
-      console.log(payload);
-      
 
       const response = await fetch(urlApi, {
         method: 'POST',
@@ -58,12 +56,7 @@ export default function ProductImageUpload({ productId, existingImages = [], onI
         body: JSON.stringify(payload),
       });
 
-      console.log(response);
-  
       const result = await response.json();
-      console.log(result);
-      
-  
       if (response.status !== 200) {
         throw new Error(result.message || 'Failed to upload images');
       }
@@ -71,9 +64,14 @@ export default function ProductImageUpload({ productId, existingImages = [], onI
       const newImages = Array.isArray(result.data) ? result.data : [result.data];
       setImages((prevImages) => [...prevImages, ...newImages]);
       onImagesUpdated?.([...images, ...newImages]);
+
+      // Show success toast
+      toast.success('Images uploaded successfully!');
     } catch (error) {
       console.error('Error uploading images:', error);
-      setError(error instanceof Error ? error.message : 'Failed to upload images');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to upload images';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) {
@@ -92,7 +90,6 @@ export default function ProductImageUpload({ productId, existingImages = [], onI
       
       const response = await fetch(urlApi, {
         method: 'GET',
-        credentials: 'include', // kalau butuh session
         headers: {
           'Content-Type': 'application/json',
         },
@@ -110,9 +107,14 @@ export default function ProductImageUpload({ productId, existingImages = [], onI
       const newImages = images.filter(img => img.id !== imageId);
       setImages(newImages);
       onImagesUpdated?.(newImages);
+
+      // Show success toast
+      toast.success('Image deleted successfully!');
     } catch (error) {
       console.error('Error deleting image:', error);
-      setError(error instanceof Error ? error.message : 'Failed to delete image');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete image';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsUploading(false);
     }

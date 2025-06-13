@@ -17,6 +17,7 @@ import {
   ArrowUturnRightIcon,
 } from '@heroicons/react/24/outline';
 import ProductImageUpload from '@/app/components/ProductImageUpload';
+import toast from 'react-hot-toast';
 
 interface ImageFile {
   id: string;
@@ -297,7 +298,8 @@ export default function AddProductPage() {
       
       console.log('Submitting product data:', JSON.stringify(formData, null, 2));
       
-      const response = await fetch('/api/produk', {
+      const apiUrl = process.env.NEXT_PUBLIC_URL_API + `/product/add`;
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -326,18 +328,23 @@ export default function AddProductPage() {
       // Set the product ID for image upload
       setProductId(result.data.id);
 
+      // Show success toast
+      toast.success('Product created successfully!');
+
       // Redirect to products list
-      router.push('/admin/products');
+      router.push(`/admin/products/${result.data.id}/edit`);
     } catch (error) {
       console.error('Error creating product:', error);
-      setError(error instanceof Error ? error.message : 'Failed to create product. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to create product. Please try again.';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto py-8 px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
         <button
           onClick={() => router.back()}

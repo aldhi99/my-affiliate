@@ -19,6 +19,8 @@ import {
 import { use } from 'react';
 import ProductImageUpload from '@/app/components/ProductImageUpload';
 import { Product } from '@/data/products';
+import toast from 'react-hot-toast';
+import LinkUrl from 'next/link';
 
 interface FormErrors {
   name?: string;
@@ -310,12 +312,13 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         name: formData.name?.trim(),
         category: formData.category?.trim(),
         subcategory: formData.subcategory?.trim(),
-        description: formData.description?.trim()
+        description: formData.description?.trim(),
       };
 
-      console.log('Submitting product data:', JSON.stringify(submitData, null, 2));
+      console.log('Submitting product data:', JSON.stringify(submitData, null, 2));  
+      const urlProduct = `/product/edit/${productId}`;
       
-      const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/edit/${productId}`
+      const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/edit/${productId}`;
       const response = await fetch(urlApi, {
         method: 'PUT',
         headers: {
@@ -330,12 +333,17 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         throw new Error(result.message || 'Failed to update product');
       }
 
+      // Show success toast
+      toast.success('Product updated successfully!');
+
       // On success, reload the current page to show updated data
       window.location.reload();
       
     } catch (error) {
       console.error('Error updating product:', error);
-      setError(error instanceof Error ? error.message : 'Failed to update product. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to update product. Please try again.';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -382,7 +390,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
   }
 
   return (
-    <div className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto py-8 px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
         <button
           onClick={() => router.back()}
@@ -397,6 +405,10 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         <div className="px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-indigo-50 to-white">
           <h1 className="text-2xl font-semibold text-gray-900">Edit Product</h1>
           <p className="mt-1 text-sm text-gray-500">Update your product information below</p>
+          <LinkUrl href={`/produk/${product.slug}`} target='_blank'
+            className="text-sm text-indigo-600 hover:text-indigo-900 mr-4">
+              Link Product
+            </LinkUrl>
         </div>
 
         {error && (
@@ -437,14 +449,17 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                     <p className="mt-1 text-sm text-red-600">{formErrors.name}</p>
                   )}
                 </div>
+                
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
+
                     <label className="block text-sm font-medium text-gray-700">Starting Price</label>
                     <div className="mt-1 relative rounded-lg shadow-sm">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <span className="text-gray-500 sm:text-sm">Rp</span>
                       </div>
+
                       <input
                         type="number"
                         name="price_start"

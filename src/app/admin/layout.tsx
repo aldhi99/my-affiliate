@@ -12,6 +12,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
+import ToastProvider from '../components/ToastProvider';
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: HomeIcon },
@@ -31,6 +32,7 @@ export default function AdminLayout({
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <ToastProvider />
       {/* Mobile sidebar */}
       <div className={`fixed inset-0 z-40 lg:hidden ${sidebarOpen ? 'block' : 'hidden'}`}>
         <div className="fixed inset-0 bg-opacity-95" onClick={() => setSidebarOpen(false)} />
