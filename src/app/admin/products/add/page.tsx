@@ -321,7 +321,7 @@ export default function AddProductPage() {
 
       console.log('Parsed response:', result);
 
-      if (!result.status) {
+      if (result.status === "ERROR") {
         throw new Error(result.message || 'Failed to create product');
       }
 

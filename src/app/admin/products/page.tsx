@@ -95,7 +95,7 @@ export default function ProductsPage() {
         throw new Error('Invalid JSON response from server');
       }
       
-      if (!result.status) {
+      if (result.status === "ERROR") {
         console.error('API error response:', result);
         throw new Error(result.message || 'Failed to fetch products');
       }
@@ -196,7 +196,7 @@ export default function ProductsPage() {
 
       const result = await response.json();
 
-      if (!result.status) {
+      if (result.status === "ERROR") {
         throw new Error(result.message || 'Failed to delete product');
       }
 

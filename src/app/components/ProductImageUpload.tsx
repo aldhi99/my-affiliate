@@ -100,7 +100,7 @@ export default function ProductImageUpload({ productId, existingImages = [], onI
       console.log(result);
       
 
-      if (!result.status) {
+      if (result.status === "ERROR") {
         throw new Error(result.message || 'Failed to delete image');
       }
 

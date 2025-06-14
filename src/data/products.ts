@@ -68,7 +68,7 @@ export async function getProducts(size: number): Promise<ProductsResponse> {
     const response = await fetch(url);
     const result = await response.json();
 
-    if (!result.status) {
+    if (result.status === "ERROR") {
       throw new Error(result.message || 'Failed to fetch products');
     }    
 
@@ -96,11 +96,7 @@ export async function getProductsBySlug(slug: string): Promise<Product> {
     const url = process.env.NEXT_PUBLIC_URL_API + `/product/${slug}`;    
     const response = await fetch(url);
     const result = await response.json();
-
-    console.log(result[0]);
-    
-
-    if (!result.status) {
+    if (result.status === "ERROR") {
       throw new Error(result.message || 'Failed to fetch products');
     }
 

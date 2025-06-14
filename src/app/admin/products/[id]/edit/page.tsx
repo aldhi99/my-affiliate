@@ -198,7 +198,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         
         console.log('API Response:', JSON.stringify(result, null, 2));
         
-        if (!result.status) {
+        if (result.status === "ERROR") {
           throw new Error(result.message || 'Failed to fetch product');
         }
         
@@ -328,7 +328,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
 
       const result = await response.json();
       
-      if (!result.status) {
+      if (result.status === "ERROR") {
         throw new Error(result.message || 'Failed to update product');
       }
 
