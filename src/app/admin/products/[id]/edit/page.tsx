@@ -18,7 +18,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { use } from 'react';
 import ProductImageUpload from '@/app/components/ProductImageUpload';
-import { Product } from '@/data/products';
+import { Product, categories } from '@/data/products';
 import toast from 'react-hot-toast';
 import LinkUrl from 'next/link';
 
@@ -182,6 +182,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -205,6 +206,10 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         console.log('Setting product data:', JSON.stringify(result.data, null, 2));
         setProduct(result.data);
         setFormData(result.data);
+        // Set the selected category when product data is loaded
+        if (result.data.category) {
+          setSelectedCategory(result.data.category);
+        }
       } catch (error) {
         console.error('Error fetching product:', error);
         setError(error instanceof Error ? error.message : 'Failed to load product. Please try again.');
@@ -508,17 +513,22 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Category</label>
-                  <input
-                    type="text"
-                    name="category"
-                    value={formData.category}
-                    onChange={handleInputChange}
-                    className={`mt-1 block w-full rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors h-12 px-4 ${
-                      formErrors.category ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter category"
-                    required
-                  />
+                  <select 
+                      className={`mt-1 block w-full rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors h-12 px-4 ${
+                        formErrors.category ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                      }`}
+                      name='category'
+                      value={selectedCategory}
+                      onChange={(e) => {
+                        setSelectedCategory(e.target.value);
+                        setFormData(prev => ({ ...prev, category: e.target.value }));
+                      }}
+                      required
+                    >
+                      {categories.map(category => (
+                        <option key={category} value={category}>{category}</option>
+                      ))}
+                    </select>
                   {formErrors.category && (
                     <p className="mt-1 text-sm text-red-600">{formErrors.category}</p>
                   )}

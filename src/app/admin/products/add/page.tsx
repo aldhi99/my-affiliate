@@ -18,6 +18,7 @@ import {
 } from '@heroicons/react/24/outline';
 import ProductImageUpload from '@/app/components/ProductImageUpload';
 import toast from 'react-hot-toast';
+import { categories } from '@/data/products';
 
 interface ImageFile {
   id: string;
@@ -206,6 +207,7 @@ export default function AddProductPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [productId, setProductId] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   const validateForm = (data: Partial<Product>): FormErrors => {
     const errors: FormErrors = {};
@@ -457,17 +459,24 @@ export default function AddProductPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Category</label>
-                  <input
-                    type="text"
-                    name="category"
-                    value={formData.category}
-                    onChange={handleInputChange}
-                    className={`mt-1 block w-full rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors h-12 px-4 ${
-                      formErrors.category ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter category"
-                    required
-                  />
+                  <select 
+                      className={`mt-1 block w-full rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors h-12 px-4 ${
+                        formErrors.category ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                      }`}
+                      name='category'
+                      value={selectedCategory}
+                      onChange={(e) => {
+                        setSelectedCategory(e.target.value);
+                        setFormData(prev => ({ ...prev, category: e.target.value }));
+                      }}
+                      required
+                    >
+                      <option value="all">Choose</option>
+                      {categories.map(category => (
+                        <option key={category} value={category}>{category}</option>
+                      ))}
+                    </select>
+
                   {formErrors.category && (
                     <p className="mt-1 text-sm text-red-600">{formErrors.category}</p>
                   )}
