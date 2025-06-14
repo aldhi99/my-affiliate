@@ -1,8 +1,6 @@
 import { Metadata } from 'next';
 import { getProductsBySlug } from '@/data/products';
 import { headers } from 'next/headers';
-import { v4 as uuidv4 } from 'uuid';
-import conn from '@/lib/connection';
 import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '@/app/components/Footer';
