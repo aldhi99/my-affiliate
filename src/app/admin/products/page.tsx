@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeftIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Product } from '@/data/products';
 import toast from 'react-hot-toast';
+import { fetchWithAuth } from '@/utils/auth';
 
 interface PaginationLink {
   url: string | null;
@@ -69,7 +70,7 @@ export default function ProductsPage() {
       
       let response;
       try {
-        response = await fetch(apiUrl);
+        response = await fetchWithAuth(apiUrl, {method: 'GET'});
         console.log('Response status:', response.status);
       } catch (fetchError) {
         console.error('Network error:', fetchError);
@@ -190,7 +191,7 @@ export default function ProductsPage() {
     try {
       setIsDeleting(true);
       const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/delete/${productToDelete.id}`;
-      const response = await fetch(urlApi, {
+      const response = await fetchWithAuth(urlApi, {
         method: 'DELETE',
       });
 

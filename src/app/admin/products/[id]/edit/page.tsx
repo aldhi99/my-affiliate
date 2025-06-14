@@ -21,6 +21,7 @@ import ProductImageUpload from '@/app/components/ProductImageUpload';
 import { Product, categories } from '@/data/products';
 import toast from 'react-hot-toast';
 import LinkUrl from 'next/link';
+import { fetchWithAuth } from '@/utils/auth';
 
 interface FormErrors {
   name?: string;
@@ -194,7 +195,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         console.log(apiUrl);
         
 
-        const response = await fetch(apiUrl);
+        const response = await fetchWithAuth(apiUrl, {method: 'GET'});
         const result = await response.json();
         
         console.log('API Response:', JSON.stringify(result, null, 2));
@@ -323,7 +324,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
       console.log('Submitting product data:', JSON.stringify(submitData, null, 2));  
       
       const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/edit/${productId}`;
-      const response = await fetch(urlApi, {
+      const response = await fetchWithAuth(urlApi, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

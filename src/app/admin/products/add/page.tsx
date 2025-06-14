@@ -19,6 +19,7 @@ import {
 import ProductImageUpload from '@/app/components/ProductImageUpload';
 import toast from 'react-hot-toast';
 import { categories } from '@/data/products';
+import { fetchWithAuth } from '@/utils/auth';
 
 interface ImageFile {
   id: string;
@@ -301,16 +302,13 @@ export default function AddProductPage() {
       console.log('Submitting product data:', JSON.stringify(formData, null, 2));
       
       const apiUrl = process.env.NEXT_PUBLIC_URL_API + `/product/add`;
-      const response = await fetch(apiUrl, {
+      const response = await fetchWithAuth(apiUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify(formData),
       });
 
-      console.log('Response status:', response.status);
       const responseText = await response.text();
+      console.log('Response status:', response.status);
       console.log('Raw response:', responseText);
 
       let result;

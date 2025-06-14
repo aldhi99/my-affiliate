@@ -21,6 +21,9 @@ import {
   BarChart,
   Bar,
 } from 'recharts';
+import { method } from 'lodash';
+import { fetchWithAuth } from '@/utils/auth';
+import { useRouter } from 'next/navigation';
 interface VisitStatsResponse {
   dailyVisits: Record<string, number>;
   weeklyVisits: Record<string, number>;
@@ -94,6 +97,7 @@ export default function AdminDashboard() {
     dailyVisits: []
   });
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchStats() {
@@ -102,12 +106,8 @@ export default function AdminDashboard() {
         const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product/visit-counts`;
         const [productsResponse, visitStatsResponse] = await Promise.all([
           getProducts(10000),
-          fetch(urlApi).then(res => res.json())
+          fetchWithAuth(urlApi, {method: 'GET'}).then(res => res.json())
         ]);
-
-        console.log("productsResponse", productsResponse.data);
-        console.log("visitStatsResponse", visitStatsResponse.data);
-        
 
         if (!productsResponse.data || !visitStatsResponse.status) {
           throw new Error('Failed to fetch dashboard data');
@@ -140,6 +140,7 @@ export default function AdminDashboard() {
         console.error('Error fetching dashboard stats:', error);
       } finally {
         setLoading(false);
+        router.push('/login');
       }
     }
 

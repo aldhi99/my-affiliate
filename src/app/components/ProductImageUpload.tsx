@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
+import { fetchWithAuth } from '@/utils/auth';
 
 interface ProductImage {
   id: string;
@@ -50,7 +51,7 @@ export default function ProductImageUpload({ productId, existingImages = [], onI
         'Content-Type': 'application/json',
       };
 
-      const response = await fetch(urlApi, {
+      const response = await fetchWithAuth(urlApi, {
         method: 'POST',
         headers,
         body: JSON.stringify(payload),
@@ -88,7 +89,7 @@ export default function ProductImageUpload({ productId, existingImages = [], onI
       const urlApi = `${process.env.NEXT_PUBLIC_URL_API}/product-image/delete?imageId=${imageId}&productId=${productId}`;
       console.log(urlApi);
       
-      const response = await fetch(urlApi, {
+      const response = await fetchWithAuth(urlApi, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
